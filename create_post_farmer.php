@@ -1,5 +1,5 @@
 <?php 
-
+include 'config_seller.php';
 session_start();
 
 if (!isset($_SESSION['username'])) {
@@ -12,10 +12,10 @@ if (!isset($_SESSION['username'])) {
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Welcome To SmartFarm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Your Product</title>
     <style>
-         body
+        body
          {
              margin: 0;
              padding: auto;
@@ -31,8 +31,10 @@ if (!isset($_SESSION['username'])) {
         }
         .logo
         {
-            width: 1366px;
-            height:110px;
+            display: block;
+        margin-left:auto;
+        margin-right:auto;
+        width: 100%
         }
         .header
         {
@@ -203,89 +205,58 @@ if (!isset($_SESSION['username'])) {
             text-decoration:underline;
             color:red;
         }
-        .div1
-        {
-            width:1366px;
-            height:400px;
-            margin-top: 5px;
-            background:url(fruveg1.jpg);
-            background-size:1366px 700px;
-            background-position:center;
-            background-repeat: no-repeat;
-            text-align: center;
-        }
-        .div1 h1
-        {
-            padding-top:80px;
-            font-size:40px;
-        }
-        .welcome
-        {
-            width: 400px;
-            padding-top: 10px;
-            padding-left: 450px;
-            padding-bottom:30px;
-            font-size: 20px;
-        }
-        .contact
-        {
-            width: 1366px;
-            background-color: #AFEEEE;
-        }
-        .contact form{
-            text-align: center;
-            padding: 10px;
-            border: .1rem solid rgba(0, 0, 0, .3);
-        }
-        .contact h1
-        {
-            text-align: center;
-            padding-top:20px;
-        }
-
-        .contact form .inputBox{
-            display: block;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        .contact form .inputBox input, .contact form  textarea{
-            padding: 1rem;
-            font-size: 15px;
-            background: #f7f7f7;
-            text-transform: none;
-            margin: 1rem 0;
-            border: .1rem solid rgba(0, 0, 0, .3);
-            width: 49%;
-        }
-
-        .contact form textarea{
-            height: 150px;
-            resize: none;
-            width: 70%;
-
-        }
+        .post_farmer
+     {
+         width: 370px;
+         height: 710px;
+         color:black;
+         top:40%;
+         left:37%;
+         position: absolute;
+         box-sizing: border-box;
+         padding: 5px 90px;  
+         font-size:14px;
+         font-weight:bold;
+         border:1px solid;
+         background-color:white;
+     }
+     h1
+     {
+         text-align:center;
+         font-size: 23px;
+         text-decoration: none;
+         font: monospace;
        
-        .footer .credit{
-            padding: 2.5rem 1rem;
-            border-top:.1rem solid rgba(0, 0, 0, .1);
-            margin-top: 1rem;
-            text-align: center;
-            font-size: 15px;
-        }
-        .footer .credit span{
-            color: var(--green);
-        }
-        .logo2
-        {
-            float: left;
-        }
-        .logo-div
-        {
-            width:1366px;
-            height:200px;
-            padding-left: 440px;
-        }
-       
+     }
+     .input
+     {
+         border-radius:16px;
+         height:30px;
+     }
+     #des
+     {
+         width: 200px;
+         height: 100px;
+         border-radius:16px;
+     }
+     #post
+     {
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin-top:4px;
+        margin-left:40px;
+        cursor: pointer;
+        border-radius: 16px;
+        border:none;
+        background-color:#AFEEEE;
+     }
+     #post:hover
+     {
+         background-color:turquoise;
+         font-weight:bold;
+     }
     </style>
 </head>
 <body>
@@ -321,49 +292,62 @@ if (!isset($_SESSION['username'])) {
 			<li><a href=""> CONTACT US </a></li>
         </ul>
     </div>
+    <div class="post_farmer">
 
-    <div class = "div1">
-        <h1>WELCOME TO SMARTFARM!</h1>
-        <div class="welcome">
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti voluptatem nesciunt recusandae fugit hic impedit id et voluptates unde reprehenderit soluta, aspernatur, dolor sequi minima aperiam vitae, laboriosam placeat culpa.</p>
-        </div>
+    <img src="SFLogo.png" class="logo" width = "210" height = "105" >
+
+    <h1> Post Your Product </h1>
+
+        <form action="" method="POST">
+            
+            <input class="input" type = "text" name = "product_name" placeholder = " Enter Product Name"  required>
+
+            <br>
+            <br>
+
+            <input class="input" type = "number" name = "product_price" placeholder = " Enter Product Price"  required>
+
+            <br>
+            <br>
+
+            <label for="category">Choose a category:</label>
+            <select id="product_category" name="product_category" class="input">
+                <option value="fruits">Fruits</option>
+                <option value="vegetables">Vegetables</option>
+                <option value="dairy">Dairy</option>
+                <option value="eggs">Eggs</option>
+            </select>
+
+            <br>
+            <br>
+
+
+			<input class="input" type="email" name="email_address" placeholder=" Enter Sellers Email Address"  required>
+
+            <br>
+            <br>
+
+			
+
+            <p>Description of products and location: </p>
+			<textarea class="input" id = "des" name="product_description" placeholder=" Briefly describe your products and your location"  required> </textarea>
+
+            <br>
+            <br>
+
+            <label for="product-imagepath" style="margin-left: 31px;"> Product Image: </label>
+            <input  type="file" name="product-imagepath" required="true" id="product-imagepath">
+
+            <br>
+            <br>
+
+            
+            <input class="input" id = "post" type="submit" name="post" value="POST">
+
+            
+            
+            <br>        
+        </form>
     </div>
-
-    <div class = "logo-div">
-    <img src="SFLogo.png" class = "logo2" width = "410" height = "205">
-    </div> 
-
-    <section class="contact" id="contact">
-            
-            <h1 class="heading"> <span>CONTACT</span> US</h1>
-
-            <form action="">
-                
-                <div class="inputBox">
-                    <input type="text" placeholder="Name">
-                    <input type="email" placeholder="Email">
-                </div>
-
-                    <div class="inputBox">
-                    <input type="number" placeholder="Number">
-                    <input type="text" placeholder="Subject">
-                </div>
-
-                <textarea placeholder="Message" name="" id="" cols="30" rows="10"></textarea>
-
-                <br>
-
-                <input type="submit" value="SEND MESSAGE" class="btn">
-
-
-            </form>
-
-        </section>
-
-        <section class="footer">
-            <h1 class="credit">All rights reserved.<br>©2021. </h1>
-            
-        </section>
-
 </body>
 </html>

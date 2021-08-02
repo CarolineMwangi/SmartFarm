@@ -7,19 +7,19 @@ session_start();
 error_reporting(0);
 
 if (isset($_SESSION['username'])) {
-    header("Location: index_farmer.php");
+    header("Location: index_admin.php");
 }
 
 if (isset($_POST['submit'])) {
-	$email_address = $_POST['email_address'];
-	$password = md5($_POST['password']);
+	$adm_email_address = $_POST['adm_email_address'];
+	$adm_password = md5($_POST['adm_password']);
 
-	$sql = "SELECT * FROM sellers_table WHERE email_address='$email_address' AND password='$password'";
+	$sql = "SELECT * FROM admin_table WHERE adm_email_address='$adm_email_address' AND adm_password='$adm_password'";
 	$result = mysqli_query($conn, $sql);
 	if ($result->num_rows > 0) {
 		$row = mysqli_fetch_assoc($result);
-		$_SESSION['username'] = $row['email_address'];
-		header("Location: index_farmer.php");
+		$_SESSION['username'] = $row['adm_email_address'];
+		header("Location: index_admin.php");
 	} else {
 		echo "<script>alert('Oops! Incorrect Email or Password.')</script>";
 	}
@@ -49,8 +49,8 @@ if (isset($_POST['submit'])) {
      }
      .log_farmer
      {
-         width: 370px;
-         height: 460px;
+         width: 350px;
+         height: 380px;
          color:black;
          top:15%;
          left:37%;
@@ -112,19 +112,20 @@ if (isset($_POST['submit'])) {
    
     <form action="" method="POST">
 
-        <input type="email" name="email_address" placeholder=" Enter email address" value="<?php echo $email_address; ?>"  required>
+        <input type="email" name="adm_email_address" placeholder=" Enter email address" value="<?php echo $email_address; ?>"  required>
 
         <br>
         <br>
         <br>
 
-        <input type="password" name="password" placeholder=" Enter password" value="<?php echo $password; ?>"  required>
+        <input type="password" name="adm_password" placeholder=" Enter password" value="<?php echo $password; ?>"  required>
         
         <br>
         <br>
 
         <a href="forgot_pass_farmer.php">Forgot Password? </a>
-        <p id = "account1">Don't have an account? <a  href = "signup_farmer.php"> SIGN UP </a> </p>
+        
+        <br>
 
         <br>
        
