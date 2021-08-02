@@ -9,7 +9,6 @@ $email="";
 $fname="";
 $lname="";
 $pnumber="";
-
 $password="";
 $errors=array();
 
@@ -19,57 +18,19 @@ $con = mysqli_connect('localhost', 'root', '', 'smartfarme');
 if (!$con) {
 	die("<script>alert('Connection failed.')</script>");
 }
-
-
 session_start();
 
-if (isset($_POST['submit'])) {
-	$email=($_POST['email']);
-	$password=($_POST['password']);
 
-	if (empty($email)) {
-		array_push($errors," Email is Required");
-	}
-	if (empty($password)) {
-		array_push($errors," Password is required");
-	}
-	print_r($errors);
-
-	if (count($errors)==0) {
-		$password=md5($password);
-		$query=" SELECT * FROM users WHERE email='$email' AND password='$password'";
-		$result= mysqli_query($con, $query);
-		
-		echo mysqli_num_rows($result);
-		if (mysqli_num_rows($result)==1) {
-			foreach ($result as $row) {
-				
-			if (isset($_SESSION)) {
-			
-			
-			$_SESSION['email']=$email;
-			$_SESSION['fname']=$row['fname'];
-			$_SESSION['lname']=$row['lname'];
-			$_SESSION['pnumber']=$row['pnumber'];
-		
-
-			$_SESSION['success']="You are logged in";
-			header('location: index_user.php');
-		}else{
-			echo "Session Expired";
-		}
-	}
-			
-		}else{
-			array_push($errors, "The email or password is incorrect");
-
-					}
-	}
-
-}
 
 
 ?>
+
+
+
+
+
+
+
 
 <!DOCTYPE html>
 <html>
@@ -195,6 +156,17 @@ if (isset($_POST['submit'])) {
 			border-radius: 5px;
 			text-align: left;
 		}
+		.container .profile dt{
+			font-family: sans-serif;
+			font-weight: 700;
+			 color: var(--black);
+
+		}
+		.container .profile{
+			list-style-type: none;
+			text-align: center;
+
+		}
 
 
 		
@@ -218,35 +190,61 @@ if (isset($_POST['submit'])) {
 
 
 
+
 	<div class="container">
 		<img src="logo.png" class="avatar">
 		<form action="" method="POST" class="login-email">
-			<?php if (count($errors)>0): ?>
-
-			<div class="error">
-				<?php  foreach ($errors as $errors): ?>
-				<p><?php echo $errors; ?></p>
-					
-				<?php endforeach ?>
-			</div>	
-				<?php endif ?>
-
-			<p class="login-text" style="font-size: 2rem; font-weight: 800;">Login</p>
-			<div class="input-group">
 			
-				<input type="email" placeholder="Email" name="email" value="<?php echo $email; ?>" >
-			</div>
-			<div class="input-group">
-				<input type="password" placeholder="Password" name="password" value="<?php if(isset($_POST['password'])){
-					echo $_POST['password'];
-				} ?>" >
-			</div>
-			<div class="input-group">
-				<button type="submit" name="submit" class="btn">Login</button>
-			</div>
-			<div class="">
-			<p class="login-last">Don't have an Account?<a href="signup_user.php">Sign-up here.</a></p>
-		</div>
+
+					<ul class="profile">
+
+						
+					
+
+
+						<dl>
+							<dt>First Name</dt>
+						<li><?php if (isset($_SESSION['fname'])) {
+							echo $_SESSION['fname'];
+						}?></li>
+						</dl>
+						<dl>
+							<dt>Last Name</dt>
+						<li><?php if (isset($_SESSION['lname'])) {
+							echo $_SESSION['lname'];
+						}?></li>
+						</dl>
+						<dl>
+							<dt>Email Address</dt>
+						<li><?php if (isset($_SESSION['email'])) {
+							echo $_SESSION['email'];
+						}?></li>
+						</dl>
+						<dl>
+							<dt>Phone Number</dt>
+						<li><?php if (isset($_SESSION['pnumber'])) {
+							echo $_SESSION['pnumber'];
+						}?></li>
+						</dl>
+					
+						
+						
+
+						</ul>
+					
+					
+
+
+					
+						
+				
+			
+
+			<p class="login-last"><a href="changepassword_user.php">Change Password</a></p>
+			<p class="login-last"><a href="index_user.php">Back to home page</a></p>
+
+
+	
 
 
 		</form>

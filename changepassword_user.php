@@ -1,3 +1,4 @@
+
 <?php
 
 $host="localhost";
@@ -6,12 +7,11 @@ $pass="";
 $db="smartfarme";
 
 $email="";
-$fname="";
-$lname="";
-$pnumber="";
-
-$password="";
 $errors=array();
+$msg1="";
+$msg2="";
+
+
 
 //mysqli_connect($host,$user,$pass);
 //mysqli_select_db($db, 'smartfarmme') or die(mysqli_error($db));
@@ -20,63 +20,62 @@ if (!$con) {
 	die("<script>alert('Connection failed.')</script>");
 }
 
-
-session_start();
+//use this when starting sessions
+if(!isset($_SESSION)) {session_start();}
 
 if (isset($_POST['submit'])) {
+
 	$email=($_POST['email']);
+	$opassword=($_POST['opassword']);
 	$password=($_POST['password']);
+	$cpassword=($_POST['cpassword']);
 
 	if (empty($email)) {
-		array_push($errors," Email is Required");
+		array_push($errors, "Email is Required");
 	}
-	if (empty($password)) {
-		array_push($errors," Password is required");
+	if (empty($opassword)) {
+		array_push($errors, "Old Password is Required");
 	}
-	print_r($errors);
 
-	if (count($errors)==0) {
-		$password=md5($password);
-		$query=" SELECT * FROM users WHERE email='$email' AND password='$password'";
-		$result= mysqli_query($con, $query);
-		
-		echo mysqli_num_rows($result);
-		if (mysqli_num_rows($result)==1) {
-			foreach ($result as $row) {
-				
-			if (isset($_SESSION)) {
-			
-			
-			$_SESSION['email']=$email;
-			$_SESSION['fname']=$row['fname'];
-			$_SESSION['lname']=$row['lname'];
-			$_SESSION['pnumber']=$row['pnumber'];
-		
+if (empty($password)) {
+		array_push($errors, "New Password is Required");
+	}
+	if (empty($cpassword)) {
+		array_push($errors, "Confirm Password is Required");
+	}
 
-			$_SESSION['success']="You are logged in";
-			header('location: index_user.php');
+	//check if Passwords match
+	if($password!=$cpassword){
+		array_push($errors, "Passwords do not match");
+	}
+
+	//excecute query when errors are 0
+	if(empty($errors)){
+		$query= mysqli_query($con,"SELECT email,password from users where email='$email' AND password='".md5($opassword)."'");
+
+		//count result
+		$num=mysqli_num_rows($query);
+
+		if ($num>0) {
+			$bn=mysqli_query($con,"UPDATE users set password='".md5($password)."' where email='$email'");
+			$_SESSION['msg1']="Password Changed Successfully";
+			header("Location: login_user.php");
 		}else{
-			echo "Session Expired";
+			$_SESSION['msg2']="Old password or email is incorrect";
 		}
 	}
-			
-		}else{
-			array_push($errors, "The email or password is incorrect");
 
-					}
-	}
 
 }
-
-
 ?>
+
 
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width-device-width, initial-scale=1.0">
-	<title>Login form</title>
+	<title>Change Password form</title>
 </head>
 <body>
 	<style type="text/css">
@@ -117,7 +116,7 @@ if (isset($_POST['submit'])) {
 			margin-right: auto;
 			width: 100%;
 		}
-		
+
 
 		.container .login-text{
 			color: #111;
@@ -159,7 +158,7 @@ if (isset($_POST['submit'])) {
 			padding: 15px 20px;
 			font-size: 1rem;
 			border-radius: 30px;
-			background: transparent; 
+			background: transparent;
 			outline: none;
 			transition: .3s;
 		}
@@ -197,7 +196,7 @@ if (isset($_POST['submit'])) {
 		}
 
 
-		
+
 
 
 
@@ -218,34 +217,67 @@ if (isset($_POST['submit'])) {
 
 
 
+
 	<div class="container">
 		<img src="logo.png" class="avatar">
+		<?php
+		if(isset($_SESSION['msg1'])){
+			?>
+			<p style="color:red;"><?php
+			echo $_SESSION['msg1'];
+			unset($_SESSION['msg1']); //for error messages, unset the session after echo
+
+			?></p>
+			<?php
+		}
+		if(isset($_SESSION['msg2'])){
+			?>
+					<p style="color:red;"><?php
+					echo $_SESSION['msg2'];
+					unset($_SESSION['msg2']); //for error messages, unset the session after echo
+
+					?></p>
+			<?php
+		}
+		 ?>
 		<form action="" method="POST" class="login-email">
 			<?php if (count($errors)>0): ?>
 
 			<div class="error">
 				<?php  foreach ($errors as $errors): ?>
 				<p><?php echo $errors; ?></p>
-					
+
 				<?php endforeach ?>
-			</div>	
+			</div>
 				<?php endif ?>
 
-			<p class="login-text" style="font-size: 2rem; font-weight: 800;">Login</p>
+			<p class="login-text" style="font-size: 2rem; font-weight: 800;">Change Password</p>
 			<div class="input-group">
-			
-				<input type="email" placeholder="Email" name="email" value="<?php echo $email; ?>" >
+
+				<input type="email" placeholder="Email" name="email" value="<?php if(isset($_POST['email'])){
+					echo $_POST['email'];
+				} ?>">
 			</div>
 			<div class="input-group">
-				<input type="password" placeholder="Password" name="password" value="<?php if(isset($_POST['password'])){
+				<input type="password" placeholder="Old Password" name="opassword" value="<?php if(isset($_POST['opassword'])){
+					echo $_POST['opassword'];
+				} ?>" >
+			</div>
+			<div class="input-group">
+				<input type="password" placeholder="New Password" name="password" value="<?php if(isset( $_POST['password'])){
 					echo $_POST['password'];
 				} ?>" >
 			</div>
 			<div class="input-group">
-				<button type="submit" name="submit" class="btn">Login</button>
+				<input type="password" placeholder="Confirm Password" name="cpassword" value="<?php if(isset($_POST['cpassword'])){
+					echo $_POST['cpassword'];
+				} ?>" >
+			</div>
+			<div class="input-group">
+				<button name="submit" class="btn">Change Password</button>
 			</div>
 			<div class="">
-			<p class="login-last">Don't have an Account?<a href="signup_user.php">Sign-up here.</a></p>
+			<p class="login-last"><a href="login_user.php">Login here.</a></p>
 		</div>
 
 
