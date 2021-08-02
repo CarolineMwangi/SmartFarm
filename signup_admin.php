@@ -1,40 +1,138 @@
 <?php 
 
+include 'config_seller.php';
+
+error_reporting(0);
+
 session_start();
 
-if (!isset($_SESSION['username'])) {
-    header("Location: login_farmer.php");
+if (isset($_SESSION['email_address'])) {
+    header("Location: login_admin.php");
+}
+
+if (isset($_POST['register'])) {
+	$adm_first_name = $_POST['adm_first_name'];
+    $adm_last_name = $_POST['adm_last_name'];
+	$adm_email_address = $_POST['adm_email_address'];
+    $adm_phone_number = $_POST['adm_phone_number'];
+	$adm_password = md5($_POST['adm_password']);
+	$adm_cpassword = md5($_POST['adm_cpassword']);
+
+	if ($adm_password == $adm_cpassword) {
+		$sql = "SELECT * FROM admin_table WHERE adm_email_address='$email_address'";
+		$result = mysqli_query($conn, $sql);
+		if (!$result->num_rows > 0) {
+			$sql = "INSERT INTO admin_table (adm_first_name, adm_last_name, adm_email_address, adm_phone_number, adm_password)
+					VALUES ('$adm_first_name', '$adm_last_name', '$adm_email_address', '$adm_phone_number', '$adm_password')";
+			$result = mysqli_query($conn, $sql);
+			if ($result) {
+				echo "<script>alert('Yay! Registration Completed.')</script>";
+				$adm_first_name = "";
+                $adm_last_name = "";
+				$adm_email_address = "";
+                $adm_phone_number = "";
+				$_POST['password'] = "";
+				$_POST['cpassword'] = "";
+			} else {
+				echo "<script>alert('Oops! Something Wrong Went.')</script>";
+			}
+		} else {
+			echo "<script>alert('Email Already Exists.Try again.')</script>";
+		}
+		
+	} else {
+		echo "<script>alert('Password Not Matched.')</script>";
+	}
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Welcome To SmartFarm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Farm Admin Sign Up</title>
     <style>
-         body
-         {
-             margin: 0;
-             padding: auto;
-             font-family: 'Times New Roman', serif;
-         }
-        .logo1
-        {
+     
+     body
+     {
+         margin: 0;
+         padding: auto;
+         font-family: 'Times New Roman', serif;
+     }
+     .logo
+     {
+        display: block;
+       margin-left:auto;
+       margin-right:auto;
+       width: 100%
+     }
+     .sign_farmer
+     {
+         width: 370px;
+         height: 580px;
+         color:black;
+         top:40%;
+         left:37%;
+         position: absolute;
+         box-sizing: border-box;
+         padding: 5px 90px;  
+         font-size:14px;
+         font-weight:bold;
+         border:1px solid;
+         background-color:white;
+     }
+     h1
+     {
+         text-align:center;
+         font-size: 20px;
+         text-decoration: none;
+         font: monospace;
+     }
+     .register
+     {
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin-top:4px;
+        margin-left:40px;
+        cursor: pointer;
+        border-radius: 16px;
+        border:none;
+        background-color:#AFEEEE;
+     }
+    
+     
+     .sign_farmer a
+     {
+        text-decoration: none;
+	    font-size: 15px;
+	    line-height: 20px;
+	    color: purple;
+        cursor: pointer;
+     }
+     .sign_farmer a:hover
+     {
+        color:darkblue;
+        text-decoration:underline;
+     }
+     .sign_farmer input
+     {
+         border-radius:16px;
+         height:30px;
+     }
+     .logo1
+    {
             display: block;
             margin-left:540px;
             margin-right:auto;
             width: 100%
             float: center;
-        }
-        .logo
-        {
-            width: 1366px;
-            height:110px;
-        }
-        .header
+    }
+    .header
         {
             width: 1366px;
             height:80px;
@@ -203,167 +301,88 @@ if (!isset($_SESSION['username'])) {
             text-decoration:underline;
             color:red;
         }
-        .div1
-        {
-            width:1366px;
-            height:400px;
-            margin-top: 5px;
-            background:url(fruveg1.jpg);
-            background-size:1366px 700px;
-            background-position:center;
-            background-repeat: no-repeat;
-            text-align: center;
-        }
-        .div1 h1
-        {
-            padding-top:80px;
-            font-size:40px;
-        }
-        .welcome
-        {
-            width: 400px;
-            padding-top: 10px;
-            padding-left: 450px;
-            padding-bottom:30px;
-            font-size: 20px;
-        }
-        .contact
-        {
-            width: 1366px;
-            background-color: #AFEEEE;
-        }
-        .contact form{
-            text-align: center;
-            padding: 10px;
-            border: .1rem solid rgba(0, 0, 0, .3);
-        }
-        .contact h1
-        {
-            text-align: center;
-            padding-top:20px;
-        }
-
-        .contact form .inputBox{
-            display: block;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        .contact form .inputBox input, .contact form  textarea{
-            padding: 1rem;
-            font-size: 15px;
-            background: #f7f7f7;
-            text-transform: none;
-            margin: 1rem 0;
-            border: .1rem solid rgba(0, 0, 0, .3);
-            width: 49%;
-        }
-
-        .contact form textarea{
-            height: 150px;
-            resize: none;
-            width: 70%;
-
-        }
-       
-        .footer .credit{
-            padding: 2.5rem 1rem;
-            border-top:.1rem solid rgba(0, 0, 0, .1);
-            margin-top: 1rem;
-            text-align: center;
-            font-size: 15px;
-        }
-        .footer .credit span{
-            color: var(--green);
-        }
-        .logo2
-        {
-            float: left;
-        }
-        .logo-div
-        {
-            width:1366px;
-            height:200px;
-            padding-left: 440px;
-        }
-       
     </style>
 </head>
 <body>
-    <div class = "logo">
+<div class = "logo">
         <img src="SFLogo.png" class = "logo1" width = "210" height = "105">
         <div class="dropdown_profile">
 			    <button class="dropbtn3"><?php echo "WELCOME, " . $_SESSION['username'] . ""; ?></button>
                 <div class="dropdown-profile">
                     <a href="">Manage Account</a>
-                    <a href="logout_farmer.php">Logout</a>
+                    <a href="logout_admin.php">Logout</a>
                 </div>
             </div>
-        <div class="dropdown_posts">
+            <div class="dropdown_posts">
 			    <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
-                    <a href="create_post_farmer.php">Create Post</a>
-                    <a href="">View Your Posts</a>
+                    <a href="">View Posts</a>
                 </div>
             </div>
             <div class="dropdown_orders">
-			    <a href=""><button class="dropbtn2">ORDERS</button></a>
+			    <a href=""><button class="dropbtn2">USERS</button></a>
                 <div class="dropdown-orders">
-                     <a href="">All Orders</a>
-                     <a href="">Dispatched Orders</a>
-                     <a href="">Pending Orders</a>
+                     <a href="view_farmers.php">View Sellers</a>
+                     <a href="">View Buyers</a>
+                     <a href="view_admins.php">View Admins</a>
+                     <a href="signup_admin.php">Add Admins</a>
                  </div>
             </div>
     </div>
     <div class = "header">
         <ul type = "none">
-            <li><a href="index_farmer.php"> HOME </a></li>
+            <li><a href="index_admin.php"> HOME </a></li>
 			<li><a href=""> ABOUT US </a></li>
 			<li><a href=""> CONTACT US </a></li>
         </ul>
     </div>
 
-    <div class = "div1">
-        <h1>WELCOME TO SMARTFARM!</h1>
-        <div class="welcome">
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti voluptatem nesciunt recusandae fugit hic impedit id et voluptates unde reprehenderit soluta, aspernatur, dolor sequi minima aperiam vitae, laboriosam placeat culpa.</p>
-        </div>
+
+    <div class="sign_farmer">
+    <img src="SFLogo.png" class="logo" width = "210" height = "105" >
+
+    <h1> Signup </h1>
+
+        <form action="" method="POST">
+            
+            <input type = "text" name = "adm_first_name" placeholder = " Enter First Name" value="<?php echo $first_name; ?>" required>
+
+            <br>
+            <br>
+
+            <input type = "text" name = "adm_last_name" placeholder = " Enter Last Name" value="<?php echo $last_name; ?>" required>
+
+            <br>
+            <br>
+
+			<input type="email" name="adm_email_address" placeholder=" Enter email address" value="<?php echo $email_address; ?>" required>
+
+            <br>
+            <br>
+
+			<input type="phone" name="adm_phone_number" placeholder=" Enter phone number" value="<?php echo $phone_number; ?>" required>
+
+            <br>
+
+            
+            <br>
+
+			<input type="password" name="adm_password" placeholder=" Enter password" value="<?php echo $password; ?>" required>
+
+            <br>
+            <br>
+
+			<input type="password" name="adm_cpassword" placeholder=" Confirm password" value="<?php echo $cpassword; ?>" required>
+
+            <br>
+            <br>
+            
+            <input class = "register" type="submit" name="register" value="REGISTER">
+
+            <p id = "account">Already have an account? <a  href = "login_admin.php"> LOG IN</a> </p>
+            
+            <br>        
+        </form>
     </div>
-
-    <div class = "logo-div">
-    <img src="SFLogo.png" class = "logo2" width = "410" height = "205">
-    </div> 
-
-    <section class="contact" id="contact">
-            
-            <h1 class="heading"> <span>CONTACT</span> US</h1>
-
-            <form action="">
-                
-                <div class="inputBox">
-                    <input type="text" placeholder="Name">
-                    <input type="email" placeholder="Email">
-                </div>
-
-                    <div class="inputBox">
-                    <input type="number" placeholder="Number">
-                    <input type="text" placeholder="Subject">
-                </div>
-
-                <textarea placeholder="Message" name="" id="" cols="30" rows="10"></textarea>
-
-                <br>
-
-                <input type="submit" value="SEND MESSAGE" class="btn">
-
-
-            </form>
-
-        </section>
-
-        <section class="footer">
-            <h1 class="credit">All rights reserved.<br>©2021. </h1>
-            
-        </section>
-
 </body>
 </html>

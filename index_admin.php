@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['username'])) {
-    header("Location: login_farmer.php");
+    header("Location: login_admin.php");
 }
 
 ?>
@@ -295,28 +295,28 @@ if (!isset($_SESSION['username'])) {
 			    <button class="dropbtn3"><?php echo "WELCOME, " . $_SESSION['username'] . ""; ?></button>
                 <div class="dropdown-profile">
                     <a href="">Manage Account</a>
-                    <a href="logout_farmer.php">Logout</a>
+                    <a href="logout_admin.php">Logout</a>
                 </div>
             </div>
         <div class="dropdown_posts">
 			    <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
-                    <a href="create_post_farmer.php">Create Post</a>
-                    <a href="">View Your Posts</a>
+                    <a href="">View Posts</a>
                 </div>
             </div>
             <div class="dropdown_orders">
-			    <a href=""><button class="dropbtn2">ORDERS</button></a>
+			    <a href=""><button class="dropbtn2">USERS</button></a>
                 <div class="dropdown-orders">
-                     <a href="">All Orders</a>
-                     <a href="">Dispatched Orders</a>
-                     <a href="">Pending Orders</a>
+                     <a href="view_farmers.php">View Sellers</a>
+                     <a href="">View Buyers</a>
+                     <a href="view_admins.php">View Admins</a>
+                     <a href="signup_admin.php">Add Admins</a>
                  </div>
             </div>
     </div>
     <div class = "header">
         <ul type = "none">
-            <li><a href="index_farmer.php"> HOME </a></li>
+            <li><a href="index_admin.php"> HOME </a></li>
 			<li><a href=""> ABOUT US </a></li>
 			<li><a href=""> CONTACT US </a></li>
         </ul>

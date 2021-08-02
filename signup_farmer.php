@@ -15,7 +15,6 @@ if (isset($_POST['register'])) {
     $last_name = $_POST['last_name'];
 	$email_address = $_POST['email_address'];
     $phone_number = $_POST['phone_number'];
-    $description = $_POST['description'];
 	$password = md5($_POST['password']);
 	$cpassword = md5($_POST['cpassword']);
 
@@ -23,8 +22,8 @@ if (isset($_POST['register'])) {
 		$sql = "SELECT * FROM sellers_table WHERE email_address='$email_address'";
 		$result = mysqli_query($conn, $sql);
 		if (!$result->num_rows > 0) {
-			$sql = "INSERT INTO sellers_table (first_name, last_name, email_address, phone_number, description, password)
-					VALUES ('$first_name', '$last_name', '$email_address', '$phone_number', '$description', '$password')";
+			$sql = "INSERT INTO sellers_table (first_name, last_name, email_address, phone_number, password)
+					VALUES ('$first_name', '$last_name', '$email_address', '$phone_number', '$password')";
 			$result = mysqli_query($conn, $sql);
 			if ($result) {
 				echo "<script>alert('Yay! Registration Completed.')</script>";
@@ -32,7 +31,6 @@ if (isset($_POST['register'])) {
                 $last_name = "";
 				$email_address = "";
                 $phone_number = "";
-                $description = "";
 				$_POST['password'] = "";
 				$_POST['cpassword'] = "";
 			} else {
@@ -74,7 +72,7 @@ if (isset($_POST['register'])) {
      .sign_farmer
      {
          width: 370px;
-         height: 740px;
+         height: 580px;
          color:black;
          top:10%;
          left:37%;
@@ -106,12 +104,7 @@ if (isset($_POST['register'])) {
         border:none;
         background-color:#AFEEEE;
      }
-     .des
-     {
-         width: 200px;
-         height: 100px;
-         border-radius:16px;
-     }
+    
      
      .sign_farmer a
      {
@@ -161,10 +154,7 @@ if (isset($_POST['register'])) {
 
             <br>
 
-            <p>Description of products and location: </p>
-			<textarea class = "des" name="description" placeholder=" Briefly describe your products and your location" value="<?php echo $description; ?>" required> </textarea>
-
-            <br>
+            
             <br>
 
 			<input type="password" name="password" placeholder=" Enter password" value="<?php echo $password; ?>" required>

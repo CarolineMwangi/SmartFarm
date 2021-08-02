@@ -247,6 +247,7 @@
         <div class="dropdown-log-content">
             <a href="login_farmer.php">As seller</a>
             <a href="login_user.php">As buyer</a>
+            <a href="login_admin.php">As admin</a>
          </div>
         </div>
     </div>
