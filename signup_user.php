@@ -27,9 +27,6 @@ $cpassword="";
 $errors=array();
 
 
-
-
-
 if (isset($_POST['submit'])) {
 	$fname=($_POST['fname']);
 	$lname=($_POST['lname']);
@@ -70,8 +67,6 @@ if (empty($password)) {
 		header('location: index_user.php');
 	}
 
-
-
 }
 
 ?>
@@ -91,8 +86,6 @@ if (empty($password)) {
 		padding: 0;
 		box-sizing: border-box;
 		font-family: sans-serif;
-
-
 		}
 
 		body {
@@ -200,26 +193,7 @@ if (empty($password)) {
 		}
 
 
-		
-
-
-
-
-
-
-
-
 	</style>
-
-
-
-
-
-
-
-
-
-
 
 
 	<div class="container">
@@ -233,11 +207,6 @@ if (empty($password)) {
 					
 				<?php endforeach ?>
 			</div>	
-			
-			
-			
-
-
 
 			<?php endif ?>
 
