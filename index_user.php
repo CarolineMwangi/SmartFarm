@@ -15,6 +15,9 @@ if (isset($_GET['logout'])) {
     unset($_SESSION['email']);
     header('location:login_user.php');
 }
+if (!isset($_SESSION)) {
+    session_start();
+}
 ?>
 
 <!DOCTYPE html>
@@ -680,8 +683,15 @@ section{
                 <?php  if (isset($_SESSION['email'])): ?>
                     
                 
-               <h1 class="heading"> <span>Welcome </span><?php  print_r($_SESSION['fname']); ?></h1>
-               <?php endif ?>
+               <h1 class="heading"> <span>Welcome </span><?php if (isset($_SESSION['fname'])){
+                   
+                print_r($_SESSION['fname']);
+
+                }
+                ?>
+                </h1>
+
+                 <?php endif ?>
                 <a href="#">Home</a>
                 <a href="login_user.php">Login</a>
                 <a href="signup_user.php">Sign-up</a>

@@ -6,11 +6,11 @@ session_start();
 $host="localhost";
 $user="root";
 $pass="";
-$db="smartfarme";
+$db="sfdb";
 
 //mysqli_connect($host,$user,$pass);
 //mysqli_select_db($db, 'smartfarmme') or die(mysqli_error($db));
-$con = mysqli_connect('localhost', 'root', '', 'smartfarme');
+$con = mysqli_connect('localhost', 'root', '', 'sfdb');
 if (!$con) {
 	die("<script>alert('Connection failed.')</script>");
 }
@@ -35,8 +35,8 @@ if (isset($_POST['submit'])) {
 	$lname=($_POST['lname']);
 	$email=($_POST['email']);
 	$pnumber=($_POST['pnumber']);
-	$password=($_POST['password']);
-	$cpassword=($_POST['cpassword']);
+	$password=md5($_POST['password']);
+	$cpassword=md5($_POST['cpassword']);
 	
 	if (empty($fname)) {
 		array_push($errors, "First Name is Required");
@@ -62,7 +62,7 @@ if (empty($password)) {
 		$password=md5($password);
 		
 
-		$sql="INSERT INTO users (fname,lname,email,pnumber,password) VALUES ('$fname','$lname','$email','$pnumber','$password',)";
+		$sql="INSERT INTO users (fname,lname,email,pnumber,password) VALUES ('$fname','$lname','$email','$pnumber','$password')";
 		mysqli_query($con,$sql);
 
 		$_SESSION['email']=$email;
@@ -260,10 +260,10 @@ if (empty($password)) {
 				<input type="tel" placeholder="Phone Number" name="pnumber" value="<?php echo $pnumber; ?>">
 			</div>
 			<div class="input-group">
-				<input type="password" placeholder="Password" name="password" >
+				<input type="password" placeholder="Password" name="password" value="<?php echo $password; ?>" >
 			</div>
 			<div class="input-group">
-				<input type="password" placeholder="Confirm Password" name="cpassword"  >
+				<input type="password" placeholder="Confirm Password" name="cpassword" value="<?php echo $cpassword; ?>" >
 			</div>
 
 			<div class="input-group">

@@ -3,7 +3,7 @@
 $host="localhost";
 $user="root";
 $pass="";
-$db="smartfarme";
+$db="sfdb";
 
 $email="";
 $fname="";
@@ -15,7 +15,7 @@ $errors=array();
 
 //mysqli_connect($host,$user,$pass);
 //mysqli_select_db($db, 'smartfarmme') or die(mysqli_error($db));
-$con = mysqli_connect('localhost', 'root', '', 'smartfarme');
+$con = mysqli_connect('localhost', 'root', '', 'sfdb');
 if (!$con) {
 	die("<script>alert('Connection failed.')</script>");
 }
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 	if (empty($password)) {
 		array_push($errors," Password is required");
 	}
-	print_r($errors);
+	//print_r($errors);
 
 	if (count($errors)==0) {
 		$password=md5($password);
@@ -45,6 +45,7 @@ if (isset($_POST['submit'])) {
 			foreach ($result as $row) {
 				
 			if (isset($_SESSION)) {
+				session_start();
 			
 			
 			$_SESSION['email']=$email;

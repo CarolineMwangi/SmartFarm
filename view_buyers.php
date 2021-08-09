@@ -1,21 +1,27 @@
 <?php 
 
+include 'config_seller.php';
+
 session_start();
 
 if (!isset($_SESSION['username'])) {
     header("Location: login_admin.php");
 }
 
+$query = "SELECT * FROM users ORDER BY lname";
+$result = mysqli_query($conn,$query);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Welcome To SmartFarm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View SmartFarm Sellers</title>
     <style>
-         body
+        body
          {
              margin: 0;
              padding: auto;
@@ -29,11 +35,6 @@ if (!isset($_SESSION['username'])) {
             width: 100%
             float: center;
         }
-        .logo
-        {
-            width: 1366px;
-            height:110px;
-        }
         .header
         {
             width: 1366px;
@@ -41,7 +42,7 @@ if (!isset($_SESSION['username'])) {
             background-color:#AFEEEE;
             float: center;
             padding-left:20px;
-	        border:1px solid none;
+            border:1px solid none;
             font-weight:bold;
         }
         .header li
@@ -203,112 +204,72 @@ if (!isset($_SESSION['username'])) {
             text-decoration:underline;
             color:red;
         }
-        .div1
+        h1
         {
-            width:1366px;
-            height:400px;
-            margin-top: 5px;
-            background:url(fruveg1.jpg);
-            background-size:1366px 700px;
-            background-position:center;
-            background-repeat: no-repeat;
+            text-align:center;
+        }
+        .data
+        {
+           margin-left:50px;
+        }
+        table,th,td
+        {
+            border: 1px ridge black;
             text-align: center;
+            border-collapse: collapse;
         }
-        .div1 h1
+        th
         {
-            padding-top:80px;
-            font-size:40px;
+            background-color:#AFEEEE;
+            font-size: 18px;
+            padding: 20px;
         }
-        .welcome
+        td
         {
-            width: 400px;
-            padding-top: 10px;
-            padding-left: 450px;
-            padding-bottom:30px;
-            font-size: 20px;
+            font-size:16px;
+            padding: 20px;
         }
-        .contact
+        .link
         {
-            width: 1366px;
-            background-color: #AFEEEE;
-        }
-        .contact form{
+            color: black;
+            padding: 10px 20px;
             text-align: center;
-            padding: 10px;
-            border: .1rem solid rgba(0, 0, 0, .3);
+            text-decoration: none;
+            display: inline-block;
+            margin-top:4px;
+            cursor: pointer;
+            border-radius: 16px;
+            border:1px solid;
+            background-color:#AFEEEE;
         }
-        .contact h1
+        .link:hover
         {
-            text-align: center;
-            padding-top:20px;
+            background-color:turquoise;
+            text-decoration:underline;
         }
-
-        .contact form .inputBox{
-            display: block;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        .contact form .inputBox input, .contact form  textarea{
-            padding: 1rem;
-            font-size: 15px;
-            background: #f7f7f7;
-            text-transform: none;
-            margin: 1rem 0;
-            border: .1rem solid rgba(0, 0, 0, .3);
-            width: 49%;
-        }
-
-        .contact form textarea{
-            height: 150px;
-            resize: none;
-            width: 70%;
-
-        }
-       
-        .footer .credit{
-            padding: 2.5rem 1rem;
-            border-top:.1rem solid rgba(0, 0, 0, .1);
-            margin-top: 1rem;
-            text-align: center;
-            font-size: 15px;
-        }
-        .footer .credit span{
-            color: var(--green);
-        }
-        .logo2
-        {
-            float: left;
-        }
-        .logo-div
-        {
-            width:1366px;
-            height:200px;
-            padding-left: 440px;
-        }
-       
     </style>
 </head>
 <body>
-    <div class = "logo">
+<div class = "logo">
         <img src="SFLogo.png" class = "logo1" width = "210" height = "105">
         <div class="dropdown_profile">
-			    <button class="dropbtn3"><?php echo "WELCOME, " . $_SESSION['username'] . ""; ?></button>
+                <button class="dropbtn3"><?php  echo "WELCOME, " . $_SESSION['username'] . ""; ?></button>
                 <div class="dropdown-profile">
                     <a href="">Manage Account</a>
                     <a href="logout_admin.php">Logout</a>
                 </div>
             </div>
         <div class="dropdown_posts">
-			    <button class="dropbtn1">POSTS</button>
+                <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
                     <a href="">View Posts</a>
                 </div>
             </div>
             <div class="dropdown_orders">
-			    <a href=""><button class="dropbtn2">USERS</button></a>
+                <a href=""><button class="dropbtn2">USERS</button></a>
                 <div class="dropdown-orders">
                      <a href="view_farmers.php">View Sellers</a>
-                     <a href="view_buyers.php">View Buyers</a>
+                     <a href="">View Buyers</a>
                      <a href="view_admins.php">View Admins</a>
                      <a href="signup_admin.php">Add Admins</a>
                  </div>
@@ -317,53 +278,46 @@ if (!isset($_SESSION['username'])) {
     <div class = "header">
         <ul type = "none">
             <li><a href="index_admin.php"> HOME </a></li>
-			<li><a href=""> ABOUT US </a></li>
-			<li><a href=""> CONTACT US </a></li>
+            <li><a href=""> ABOUT US </a></li>
+            <li><a href=""> CONTACT US </a></li>
         </ul>
     </div>
-
-    <div class = "div1">
-        <h1>WELCOME TO SMARTFARM!</h1>
-        <div class="welcome">
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti voluptatem nesciunt recusandae fugit hic impedit id et voluptates unde reprehenderit soluta, aspernatur, dolor sequi minima aperiam vitae, laboriosam placeat culpa.</p>
-        </div>
-    </div>
-
-    <div class = "logo-div">
-    <img src="SFLogo.png" class = "logo2" width = "410" height = "205">
-    </div> 
-
-    <section class="contact" id="contact">
-            
-            <h1 class="heading"> <span>CONTACT</span> US</h1>
-
-            <form action="">
+    
+    <h1> SMART FARM USERS: SELLERS</h1>
+    <div class = "data">
+    <form action="" method="post">
+        <table>
+            <tr>
+                <th>Buyer ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email Address</th>
+                <th>Phone Number</th>
+                <th>Password</th>
                 
-                <div class="inputBox">
-                    <input type="text" placeholder="Name">
-                    <input type="email" placeholder="Email">
-                </div>
+            </tr>
 
-                    <div class="inputBox">
-                    <input type="number" placeholder="Number">
-                    <input type="text" placeholder="Subject">
-                </div>
+        <?php
 
-                <textarea placeholder="Message" name="" id="" cols="30" rows="10"></textarea>
+             while($rows = mysqli_fetch_assoc($result)){
 
-                <br>
+        ?>
 
-                <input type="submit" value="SEND MESSAGE" class="btn">
+                    <tr>
+                        <td><?php echo $rows['id'];?></td>
+                        <td><?php echo $rows['fname'];?></td>
+                        <td><?php echo $rows['lname'];?></td>
+                        <td><?php echo $rows['email'];?></td>
+                        <td><?php echo $rows['pnumber'];?></td>
+                        <td><?php echo $rows['password'];?></td>
+                        <td><a class= "link" href="changepassword_user.php">Update Password</a></td>
+                        <td><a class= "link" href="">Suspend Account</a></td>
+                    </tr>
 
+                    <?php } ?>
 
-            </form>
-
-        </section>
-
-        <section class="footer">
-            <h1 class="credit">All rights reserved.<br>©2021. </h1>
-            
-        </section>
-
+        </table>
+    </form>
+    </div>
 </body>
 </html>
