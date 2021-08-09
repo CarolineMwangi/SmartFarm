@@ -526,33 +526,6 @@ section{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @media(max-width:1200px){
 
     html{
@@ -635,30 +608,11 @@ section{
     .deal .content .count-down .box span{
         font-size: 1.5rem;
     }
-
-
-
-
-
 }
-
-
-
-
-
-
 
 </style>
 
-
-
     <!--/Css ends here-->
-
-
-
-
-
-
 
     <!-- Header starts here-->
     <header>
@@ -717,17 +671,11 @@ section{
                 <a href="profile_user.php" class="fas fa-user-circle"></a>
 
 
-
-
-
             </div>
 
         </div>
 
     </header>
-
-
-
 
 
     <!-- /Header ends here-->
@@ -747,9 +695,6 @@ section{
         
 
     </section>
-
-
-
 
     <!--/home section ends here-->
 
@@ -778,8 +723,6 @@ section{
     <!--/banner section ends here-->
 
 
-
-
     <!--Category section starts here-->
 
     <section class="category" id="category">
@@ -800,8 +743,6 @@ section{
             
         </div>
     </section>
-
-
 
 
     <!--/Category section ends here-->
@@ -889,17 +830,7 @@ section{
         </div>
     </section>
 
-
-
-
-
-
-
-
-
     <!--/Product section ends here-->
-
-
 
 
     <!--Deal  section starts here-->
@@ -936,16 +867,7 @@ section{
 
     </section>
 
-
-
-
-
-
     <!--/Deal  section ends here-->
-
-
-
-
 
         <!--Contact  section starts here-->
 
@@ -974,19 +896,7 @@ section{
 
         </section>
 
-
-
-
-
-
-
-
         <!--/Contact  section ends here-->
-
-
-
-
-
 
         <!--Footer section starts here-->
 
@@ -1018,34 +928,7 @@ section{
             <h1 class="credit">All rights reserved. </h1>
         </section>
 
-
-
-
-
-
-
         <!--/Footer section ends here-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
 
 <!--custome javascript link(main.js)-->
 <script src="js/main.js"></script>

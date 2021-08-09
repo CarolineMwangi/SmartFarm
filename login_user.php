@@ -93,23 +93,23 @@ if (isset($_POST['submit'])) {
 
 		body {
 			width: 100%;
-			min-height: 100vh;
-			background-image: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url(backie.jpg) ;
-			background-position: center;
-			background-size: cover;
-			display: flex;
-			justify-content: center;
-			align-items:center;
+			margin: 0;
+			padding: auto;
+			font-family: 'Times New Roman', serif;
 		}
 		.container {
-			width: 400px;
-			min-height: 400px;
-			background: #fff;
-			border-radius: 5px;
-			box-shadow: 0 0 5px  rgba(0, 0, 0,.3);
-			padding: 40px 30px;
-
-
+			width: 350px;
+			height: 370px;
+			color:black;
+			top:20%;
+			left:37%;
+			position: absolute;
+			box-sizing: border-box;
+			padding: 5px 90px;  
+			font-size:14px;
+			font-weight:bold;
+			border:1px solid;
+			background-color:white;
 
 		}
 		.container .avatar{
@@ -121,19 +121,16 @@ if (isset($_POST['submit'])) {
 		
 
 		.container .login-text{
-			color: #111;
-			font-weight: 500;
+			text-align:center;
 			font-size: 20px;
-			text-align: center;
-			margin-bottom: 20px;
-			display: black;
-			text-transform: capitalize;
+			text-decoration: none;
+			font: monospace;
 
 		}
 		.container .login-last{
 			color: #111;
-			font-weight: 500;
-			font-size: 1.1rem;
+			font-weight: 400;
+			font-size: 14px;
 			text-align: center;
 			margin-bottom: 20px;
 			display: black;
@@ -144,42 +141,36 @@ if (isset($_POST['submit'])) {
 			text-decoration: none;
 			color: #6c5ce7;
 
-
 		}
 
 		.container .login-email .input-group {
 			width: 100%;
-			height: 50px;
+			height: 30px;
 			margin-bottom: 25px;
 		}
 
 		.container .login-email .input-group input {
 			width: 100%;
 			height: 100%;
-			border: 2px solid #e7e7e7;
 			padding: 15px 20px;
-			font-size: 1rem;
+			font-size: 13px;
 			border-radius: 30px;
 			background: transparent; 
 			outline: none;
 			transition: .3s;
 		}
-		.container .login-email .input-group input:focus, .container .login-email .input-group input:valid {
-			border-color: #a29bfe;
-		}
+		
 		.container .login-email .input-group .btn {
-			display: block;
-			width: 100%;
-			padding: 15px 20px;
+			padding: 10px 50px;
 			text-align: center;
-			border: none;
-			background: #a29bfe;
-			outline: none;
-			border-radius: 30px;
-			font-size: 1.2rem;
-			color: #fff;
+			text-decoration: none;
+			display: inline-block;
+			margin-top:4px;
+			margin-left:30px;
 			cursor: pointer;
-			transition: .3s;
+			border-radius: 16px;
+			border:none;
+			background-color:#AFEEEE;
 		}
 
 		.container .login-email .input-group .btn:hover {
@@ -210,17 +201,8 @@ if (isset($_POST['submit'])) {
 	</style>
 
 
-
-
-
-
-
-
-
-
-
 	<div class="container">
-		<img src="logo.png" class="avatar">
+		<img src="logo.png" class="avatar" width = "210" height = "105">
 		<form action="" method="POST" class="login-email">
 			<?php if (count($errors)>0): ?>
 
@@ -232,7 +214,8 @@ if (isset($_POST['submit'])) {
 			</div>	
 				<?php endif ?>
 
-			<p class="login-text" style="font-size: 2rem; font-weight: 800;">Login</p>
+			<p class="login-text" >Login</p>
+			<br>
 			<div class="input-group">
 			
 				<input type="email" placeholder="Email" name="email" value="<?php echo $email; ?>" >
