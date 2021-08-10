@@ -108,17 +108,12 @@ if (isset($_POST['submit'])) {
 			color: #111;
 			font-weight: 400;
 			font-size: 14px;
-			text-align: center;
 			margin-bottom: 20px;
 			display: black;
 			text-transform: capitalize;
 
 		}
-		.container .login-last a{
-			text-decoration: none;
-			color: #6c5ce7;
-
-		}
+	
 
 		.container .login-email .input-group {
 			width: 100%;
@@ -177,6 +172,9 @@ if (isset($_POST['submit'])) {
 				<button type="submit" name="submit" class="btn">Login</button>
 			</div>
 			<div class="">
+			<a href="forgot_pass_farmer.php"  >Forgot Password? </a>
+			<br>
+			<br>
 			<p class="login-last">Don't have an Account?<a href="signup_user.php">Sign-up here.</a></p>
 		</div>
 
