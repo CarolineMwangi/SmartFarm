@@ -31,8 +31,8 @@ if (isset($_POST['register'])) {
                 $adm_last_name = "";
 				$adm_email_address = "";
                 $adm_phone_number = "";
-				$_POST['password'] = "";
-				$_POST['cpassword'] = "";
+				$password = "";
+				$cpassword = "";
 			} else {
 				echo "<script>alert('Oops! Something Wrong Went.')</script>";
 			}

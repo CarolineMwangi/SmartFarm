@@ -1,8 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-session_start();
-
 $host="localhost";
 $user="root";
 $pass="";
@@ -16,58 +13,55 @@ if (!$con) {
 }
 
 
-error_reporting(E_ALL);
+error_reporting(0);
+session_start();
 
-$fname="";
-$lname="";
-$email="";
-$pnumber="";
-$password="";
-$cpassword="";
-$errors=array();
 
+if (isset($_SESSION['email_address'])) {
+    header("Location: login_user.php");
+}
 
 if (isset($_POST['submit'])) {
+
 	$fname=($_POST['fname']);
 	$lname=($_POST['lname']);
 	$email=($_POST['email']);
 	$pnumber=($_POST['pnumber']);
 	$password=md5($_POST['password']);
 	$cpassword=md5($_POST['cpassword']);
-	
-	if (empty($fname)) {
-		array_push($errors, "First Name is Required");
-	}
-	if (empty($lname)) {
-		array_push($errors, "Last Name is Required");
-	}
 
-if (empty($email)) {
-		array_push($errors, "Email is Required");
-	}
-if (empty($pnumber)) {
-		array_push($errors, "Phone number is Required");
-	}
+	if ($password == $cpassword){
 
-if (empty($password)) {
-		array_push($errors, "Password is Required");
-	}
-	if ($password != $cpassword) {
-		array_push($errors, "The passwords do not match");
-	}
-	if (count($errors)==0) {
-		$password=md5($password);
+		$sql = "SELECT * FROM users WHERE email='$email'";
+		$result = mysqli_query($con, $sql);
+		if (!$result->num_rows > 0) {
+			$sql="INSERT INTO users (fname,lname,email,pnumber,password) VALUES ('$fname','$lname','$email','$pnumber','$password')";
+			$result = mysqli_query($con,$sql);
+
+			if($result){
+				echo "<script>alert('Yay! Registration Completed.')</script>";
+				$fname = "";
+                $lname = "";
+				$email = "";
+                $pnumber = "";
+				$password = "";
+				$cpassword = "";
+
+				header("Location: login_user.php");
+			}else{
+				echo "<script>alert('Oops! Something Wrong Went.')</script>";
+			}
+		}else {
+				echo "<script>alert('Email Already Exists.Try again.')</script>";
+			}
 		
-
-		$sql="INSERT INTO users (fname,lname,email,pnumber,password) VALUES ('$fname','$lname','$email','$pnumber','$password')";
-		mysqli_query($con,$sql);
-
-		$_SESSION['email']=$email;
-		$_SESSION['success']="You are signed up";
-		header('location: login_user.php');
+		} else {
+			echo "<script>alert('Password Not Matched.')</script>";
+		}
+		
 	}
 
-}
+
 
 ?>
 <!DOCTYPE html>

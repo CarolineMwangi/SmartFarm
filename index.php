@@ -255,7 +255,7 @@
     <div class = "intro">
         <div class = "words">
         <h1>SMART FARM ONLINE SHOPPING</h1>
-        <p class = "pintro"> We offer fresh and high quality farm produce that are straight from the farm and are delivered right at your door step upon request.Blah blah blah blah blah blah.</p>
+        <p class = "pintro"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse accusantium placeat provident atque omnis repellendus in exercitationem! Vitae optio sequi mollitia, similique consectetur exercitationem? Ipsum atque reprehenderit unde illum incidunt.</p>
         <a href="login_user.php">SHOP WITH US</a>
         </div>
     </div>
@@ -263,7 +263,7 @@
     <div class = "seller">
         <div class = "words">
         <h1>ADVERTISE YOUR PRODUCTS</h1>
-        <p class = "pintro"> We offer fresh and high quality farm produce that are straight from the farm and are delivered right at your door step upon request.Blah blah blah blah blah blah.</p>
+        <p class = "pintro"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestiae architecto dolor aperiam natus autem! Magnam eum consequuntur tempore nulla maxime modi molestiae, iure doloremque nam deleniti natus impedit officia error.</p>
         <a href="login_farmer.php">POST YOUR PRODUCTS</a>
         </div>
     </div>
@@ -271,7 +271,7 @@
     <div class = "buyer">
         <div class = "words">
         <h1>SHOP FARM PRODUCE</h1>
-        <p class = "pintro"> We offer fresh and high quality farm produce that are straight from the farm and are delivered right at your door step upon request.Blah blah blah blah blah blah.</p>
+        <p class = "pintro"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum in molestiae nesciunt, similique, et adipisci commodi dolorem officiis numquam at quidem eaque odit voluptate, nihil necessitatibus incidunt magni ut? Nisi.</p>
         <a href="login_user.php">SHOP WITH US</a>
         </div>
     </div>

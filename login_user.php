@@ -5,12 +5,6 @@ $user="root";
 $pass="";
 $db="sfdb";
 
-$email="";
-$fname="";
-$lname="";
-$pnumber="";
-
-$password="";
 $errors=array();
 
 //mysqli_connect($host,$user,$pass);
@@ -22,50 +16,33 @@ if (!$con) {
 
 
 session_start();
+error_reporting(0);
+
+if (isset($_SESSION['email_address'])) {
+    header("Location: index_user.php");
+}
 
 if (isset($_POST['submit'])) {
-	$email=($_POST['email']);
-	$password=($_POST['password']);
+		$email=$_POST['email'];
+		$password=md5($_POST['password']);
 
-	if (empty($email)) {
-		array_push($errors," Email is Required");
-	}
-	if (empty($password)) {
-		array_push($errors," Password is required");
-	}
-	//print_r($errors);
-
-	if (count($errors)==0) {
-		$password=md5($password);
+		
 		$query=" SELECT * FROM users WHERE email='$email' AND password='$password'";
 		$result= mysqli_query($con, $query);
 		
-		echo mysqli_num_rows($result);
-		if (mysqli_num_rows($result)==1) {
-			foreach ($result as $row) {
-				
-			if (isset($_SESSION)) {
-				session_start();
+		if ($result->num_rows > 0) {
 			
+			$row = mysqli_fetch_assoc($result);
+			$_SESSION['email_address'] = $row['email'];
+			header("Location: index_user.php");
+	
 			
-			$_SESSION['email']=$email;
-			$_SESSION['fname']=$row['fname'];
-			$_SESSION['lname']=$row['lname'];
-			$_SESSION['pnumber']=$row['pnumber'];
-		
-
-			$_SESSION['success']="You are logged in";
-			header('location: index_user.php');
 		}else{
-			echo "Session Expired";
+
+			echo "<script>alert('Oops! Incorrect Email or Password.')</script>";
+
 		}
-	}
-			
-		}else{
-			array_push($errors, "The email or password is incorrect");
-
-					}
-	}
+	
 
 }
 
@@ -99,7 +76,7 @@ if (isset($_POST['submit'])) {
 		}
 		.container {
 			width: 350px;
-			height: 370px;
+			height: 470px;
 			color:black;
 			top:20%;
 			left:37%;
@@ -177,43 +154,14 @@ if (isset($_POST['submit'])) {
 			transform: translateY(-5px);
 			background:turquoise;
 		}
-			.error{
-			width: 92%;
-			margin: 0px auto;
-			padding: 10px;
-			border: 1px solid #a94442;
-			color: #a94442;
-			background: #f2dede;
-			border-radius: 5px;
-			text-align: left;
-		}
-
-
-		
-
-
-
-
-
-
-
-
+			
 	</style>
 
 
 	<div class="container">
 		<img src="logo.png" class="avatar" width = "210" height = "105">
 		<form action="" method="POST" class="login-email">
-			<?php if (count($errors)>0): ?>
-
-			<div class="error">
-				<?php  foreach ($errors as $errors): ?>
-				<p><?php echo $errors; ?></p>
-					
-				<?php endforeach ?>
-			</div>	
-				<?php endif ?>
-
+			
 			<p class="login-text" >Login</p>
 			<br>
 			<div class="input-group">

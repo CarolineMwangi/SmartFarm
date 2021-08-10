@@ -1,22 +1,10 @@
 
 <?php
 
-
 session_start();
-$email=$_SESSION['email'];
-$_SESSION['success']="You are logged in";
 
-if (empty($_SESSION['email'])) {
-    header('location:login_user.php');
-}
-
-if (isset($_GET['logout'])) {
-     session_destroy();
-    unset($_SESSION['email']);
-    header('location:login_user.php');
-}
-if (!isset($_SESSION)) {
-    session_start();
+if (!isset($_SESSION['email_address'])) {
+    header("Location: login_user.php");
 }
 ?>
 
@@ -42,12 +30,12 @@ if (!isset($_SESSION)) {
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap');
 
 :root{
-    --green: #27ae60;
+    --green: turquoise;
     --black: #2c2c54;
 }
 
 *{
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Times New Roman', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -616,47 +604,39 @@ section{
 
     <!-- Header starts here-->
     <header>
-        <div class="header-1">
+        <div class="header-1" style = "background-color:white;">
 
             
             <img src="logo.png" width="200 " height="80">
 
-            <form action="" class="search-box-container" >
-                <input type="search" id="search-box" placeholder="search here...">
+            <form action="" class="search-box-container"  >
+                <input type="search" id="search-box" placeholder=" Search here..." style = "border: 1px solid black;">
                 <label for="search-box" class="fas fa-search"></label>
             </form>
 
 
         </div>
 
-        <div class="header-2">
+        <div class="header-2" style = "background-color:#AFEEEE;">
 
             <div id="menu-bar" class="fas fa-bars"></div>
 
             <nav class="navbar">
-                <?php  if (isset($_SESSION['email'])): ?>
-                    
                 
-               <h1 class="heading"> <span>Welcome </span><?php if (isset($_SESSION['fname'])){
-                   
-                print_r($_SESSION['fname']);
+                
+               <h1 class="heading"> <?php echo "WELCOME, " . $_SESSION['email_address'] . ""; ?></h1>
 
-                }
-                ?>
-                </h1>
-
-                 <?php endif ?>
-                <a href="#">Home</a>
-                <a href="login_user.php">Login</a>
-                <a href="signup_user.php">Sign-up</a>
-                <?php if (isset($_SESSION['email'])): ?> 
+        
+                <a href="index_user.php">Home</a>
+                
+                <?php if (isset($_SESSION['email_address'])): ?> 
                     <a href="logout_user.php">Logout</a>
                      <a href="profile_user.php">Profile</a>
 
                 
 
                 <?php endif ?>
-                  <?php if (isset($_SESSION['email'])): ?> 
+                  <?php if (isset($_SESSION['email_address'])): ?> 
                          <a href="changepassword_user.php">Change password</a>
 
                 <?php endif ?>
@@ -687,8 +667,8 @@ section{
             <img src="veg2.jpg" alt="">
         </div>
 
-        <div class="content">
-            <span>fresh and roganic</span>
+        <div class="content" style = "margin-left:30px;">
+            <span>fresh and organic</span>
             <h3>Your daily need product</h3>
             <a href="#" class="btn">get started</a>
         </div>
@@ -840,7 +820,7 @@ section{
         <div class="content">
             
             <h3 class="title">deal of the day</h3>
-            <p>Blah blah blah</p>
+            <p style = "color:white; font-size:25px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores dignissimos aspernatur eveniet, odit nam itaque tempora praesentium repudiandae repellat laborum excepturi dicta ipsam hic cupiditate deleniti deserunt corrupti! Quae, sapiente?</p>
 
             <div class="count-down">
                 <div class="box">
@@ -906,7 +886,7 @@ section{
                 
                 <div class="box">
                     <a href="#" class="logo"><i class="fas fa-shopping-basket"></i>Smart Farm</a>
-                    <p>bal blah blah</p>
+                    <p>Real Farm Freshness</p>
                     <div class="share">
                         <a href="#" class="btn fab fa-facebook-f"></a>
                         <a href="#" class="btn fab fa-twitter"></a>

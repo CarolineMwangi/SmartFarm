@@ -269,7 +269,7 @@ $result1 = mysqli_query($conn,$sql);
 			    <a href=""><button class="dropbtn2">USERS</button></a>
                 <div class="dropdown-orders">
                      <a href="view_farmers.php">View Sellers</a>
-                     <a href="">View Buyers</a>
+                     <a href="view_buyers.php">View Buyers</a>
                      <a href="view_admins.php">View Admins</a>
                      <a href="signup_admin.php">Add Admins</a>
                  </div>

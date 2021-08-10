@@ -311,6 +311,8 @@ if (!isset($_SESSION['username'])) {
                      <a href="view_buyers.php">View Buyers</a>
                      <a href="view_admins.php">View Admins</a>
                      <a href="signup_admin.php">Add Admins</a>
+                     <a href="add_seller.php">Add Sellers</a>
+                     <a href="add_buyer.php">Add Buyers</a>
                  </div>
             </div>
     </div>
