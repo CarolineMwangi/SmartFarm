@@ -172,7 +172,9 @@ if (isset($_POST['submit'])) {
 				<button type="submit" name="submit" class="btn">Login</button>
 			</div>
 			<div class="">
-			<a href="forgot_pass_farmer.php"  >Forgot Password? </a>
+			<a href="forgot_pass_user.php"  >Forgot Password? </a>
+			<br>
+			<a href="index.php">Back To Home</a>
 			<br>
 			<br>
 			<p class="login-last">Don't have an Account?<a href="signup_user.php">Sign-up here.</a></p>

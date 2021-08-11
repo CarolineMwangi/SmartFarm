@@ -72,7 +72,7 @@ if (isset($_POST['register'])) {
      .sign_farmer
      {
          width: 370px;
-         height: 580px;
+         height: 600px;
          color:black;
          top:10%;
          left:37%;
@@ -170,6 +170,7 @@ if (isset($_POST['register'])) {
             <input class = "register" type="submit" name="register" value="REGISTER">
 
             <p id = "account">Already have an account? <a  href = "login_farmer.php"> LOG IN</a> </p>
+            <a href="index.php">Back To Home</a>
             
             <br>        
         </form>

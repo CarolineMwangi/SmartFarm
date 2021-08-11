@@ -294,7 +294,8 @@ if (!isset($_SESSION['username'])) {
         <div class="dropdown_profile">
 			    <button class="dropbtn3"><?php echo "WELCOME, " . $_SESSION['username'] . ""; ?></button>
                 <div class="dropdown-profile">
-                    <a href="">Manage Account</a>
+                    <a href="">Manage Profile</a>
+                    <a href="changepassword_admin.php">Change Password</a>
                     <a href="logout_admin.php">Logout</a>
                 </div>
             </div>

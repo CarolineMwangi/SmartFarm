@@ -125,6 +125,7 @@ if (isset($_POST['submit'])) {
 
         <a href="forgot_pass_farmer.php">Forgot Password? </a>
         <p id = "account1">Don't have an account? <a  href = "signup_farmer.php"> SIGN UP </a> </p>
+        <a href="index.php">Back To Home</a>
 
         <br>
        

@@ -630,7 +630,7 @@ section{
                 <a href="index_user.php">Home</a>
                 
                 <?php if (isset($_SESSION['email_address'])): ?> 
-                    <a href="logout_user.php">Logout</a>
+                
                      <a href="profile_user.php">Profile</a>
 
                 
@@ -642,6 +642,11 @@ section{
                 <?php endif ?>
                 <a href="#">About us</a>
                 <a href="#">Contact Us</a>
+
+                <?php if (isset($_SESSION['email_address'])): ?> 
+                    <a href="logout_user.php">Logout</a>
+                     
+                <?php endif ?>
 
             </nav>
 

@@ -3,136 +3,70 @@
 include 'config_seller.php';
 
 error_reporting(0);
-
 session_start();
 
-if (isset($_SESSION['email_address'])) {
-    header("Location: login_admin.php");
+if (!isset($_SESSION['username'])) {
+    header("Location: login_farmer.php");
 }
 
-if (isset($_POST['register'])) {
-	$adm_first_name = $_POST['adm_first_name'];
-    $adm_last_name = $_POST['adm_last_name'];
-	$adm_email_address = $_POST['adm_email_address'];
-    $adm_phone_number = $_POST['adm_phone_number'];
-	$adm_password = md5($_POST['adm_password']);
-	$adm_cpassword = md5($_POST['adm_cpassword']);
+if(isset($_POST['change'])){
+     
+    $email_address = $_POST['email_address'];
+    $opassword = md5($_POST['opassword']);
+    $npassword = md5($_POST['npassword']);
+    $cpassword = md5($_POST['cpassword']);
 
-	if ($adm_password == $adm_cpassword) {
-		$sql = "SELECT * FROM admin_table WHERE adm_email_address='$email_address'";
-		$result = mysqli_query($conn, $sql);
-		if (!$result->num_rows > 0) {
-			$sql = "INSERT INTO admin_table (adm_first_name, adm_last_name, adm_email_address, adm_phone_number, adm_password)
-					VALUES ('$adm_first_name', '$adm_last_name', '$adm_email_address', '$adm_phone_number', '$adm_password')";
-			$result = mysqli_query($conn, $sql);
-			if ($result) {
-				echo "<script>alert('Yay! Registration Completed.')</script>";
-				$adm_first_name = "";
-                $adm_last_name = "";
-				$adm_email_address = "";
-                $adm_phone_number = "";
-				$password = "";
-				$cpassword = "";
-			} else {
-				echo "<script>alert('Oops! Something Wrong Went.')</script>";
-			}
-		} else {
-			echo "<script>alert('Email Already Exists.Try again.')</script>";
-		}
-		
-	} else {
-		echo "<script>alert('Password Not Matched.')</script>";
-	}
+    if($npassword == $cpassword){
+        $sql = "SELECT * FROM sellers_table WHERE email_address='$email_address' AND password = '$opassword'";
+        $result = mysqli_query($conn, $sql);
+        if($result-> num_rows > 0){
+
+            $sql = "UPDATE sellers_table set password='$npassword' where email_address='$email_address'";
+            $result = mysqli_query($conn, $sql);
+            if($result){
+                echo "<script>alert('Yay! Password Successfully Changed.')</script>";
+                $email_address = "";
+                $opassword = "";
+                $npassword = "";
+                $cpassword = "";
+                
+            }else{
+                echo "<script>alert('Oops! Something Wrong Went.')</script>";
+            }
+
+        }else{
+            echo "<script>alert('Oops! Invalid Details.Try again')</script>";
+        }
+    }else{
+        echo "<script>alert('Password Not Matched.')</script>";
+    }
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Farm Admin Sign Up</title>
+    <title>Change Password Seller</title>
     <style>
-     
-     body
-     {
-         margin: 0;
-         padding: auto;
-         font-family: 'Times New Roman', serif;
-     }
-     .logo
-     {
-        display: block;
-       margin-left:auto;
-       margin-right:auto;
-       width: 100%
-     }
-     .sign_farmer
-     {
-         width: 370px;
-         height: 580px;
-         color:black;
-         top:40%;
-         left:37%;
-         position: absolute;
-         box-sizing: border-box;
-         padding: 5px 90px;  
-         font-size:14px;
-         font-weight:bold;
-         border:1px solid;
-         background-color:white;
-     }
-     h1
-     {
-         text-align:center;
-         font-size: 20px;
-         text-decoration: none;
-         font: monospace;
-     }
-     .register
-     {
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        margin-top:4px;
-        margin-left:40px;
-        cursor: pointer;
-        border-radius: 16px;
-        border:none;
-        background-color:#AFEEEE;
-     }
-    
-     
-     .sign_farmer a
-     {
-        text-decoration: none;
-	    font-size: 15px;
-	    line-height: 20px;
-	    color: purple;
-        cursor: pointer;
-     }
-     .sign_farmer a:hover
-     {
-        color:darkblue;
-        text-decoration:underline;
-     }
-     .sign_farmer input
-     {
-         border-radius:16px;
-         height:30px;
-     }
-     .logo1
-    {
+             body
+         {
+             margin: 0;
+             padding: auto;
+             font-family: 'Times New Roman', serif;
+         }
+        .logo1
+        {
             display: block;
-            margin-left:540px;
+           
             margin-right:auto;
             width: 100%
             float: center;
-    }
-    .header
+        }
+        
+        .header
         {
             width: 1366px;
             height:80px;
@@ -301,89 +235,128 @@ if (isset($_POST['register'])) {
             text-decoration:underline;
             color:red;
         }
+        .change_farmer
+        {
+            width: 370px;
+            height: 430px;
+            color:black;
+            top:40%;
+            left:37%;
+            position: absolute;
+            box-sizing: border-box;
+            padding: 5px 90px;  
+            font-size:14px;
+            font-weight:bold;
+            border:1px solid;
+            background-color:white;
+        }
+        h1
+        {
+            text-align:center;
+            font-size: 20px;
+            text-decoration: none;
+            font: monospace;
+        }
+        .change
+        {
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-top:4px;
+           
+            cursor: pointer;
+            border-radius: 16px;
+            border:none;
+            background-color:#AFEEEE;
+        }
+        
+        
+        .change_farmer a
+        {
+            text-decoration: none;
+            font-size: 15px;
+            line-height: 20px;
+            color: purple;
+            cursor: pointer;
+        }
+        .change_farmer a:hover
+        {
+            color:darkblue;
+            text-decoration:underline;
+        }
+        .change_farmer input
+        {
+            border-radius:16px;
+            height:30px;
+        }
     </style>
 </head>
 <body>
-<div class = "logo">
+    <div class = "logo">
         <img src="SFLogo.png" class = "logo1" width = "210" height = "105">
         <div class="dropdown_profile">
 			    <button class="dropbtn3"><?php echo "WELCOME, " . $_SESSION['username'] . ""; ?></button>
                 <div class="dropdown-profile">
                     <a href="">Manage Profile</a>
-                    <a href="changepassword_admin.php">Change Password</a>
-                    <a href="logout_admin.php">Logout</a>
+                    <a href="changepassword_farmer.php">Change Password</a>
+                    <a href="logout_farmer.php">Logout</a>
                 </div>
             </div>
-            <div class="dropdown_posts">
+        <div class="dropdown_posts">
 			    <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
-                    <a href="">View Posts</a>
+                    <a href="create_post_farmer.php">Create Post</a>
+                    <a href="">View Your Posts</a>
                 </div>
             </div>
             <div class="dropdown_orders">
-			    <a href=""><button class="dropbtn2">USERS</button></a>
+			    <a href=""><button class="dropbtn2">ORDERS</button></a>
                 <div class="dropdown-orders">
-                     <a href="view_farmers.php">View Sellers</a>
-                     <a href="">View Buyers</a>
-                     <a href="view_admins.php">View Admins</a>
-                     <a href="signup_admin.php">Add Admins</a>
-                     <a href="add_seller.php">Add Sellers</a>
-                     <a href="add_buyer.php">Add Buyers</a>
+                     <a href="">All Orders</a>
+                     <a href="">Dispatched Orders</a>
+                     <a href="">Pending Orders</a>
                  </div>
             </div>
     </div>
     <div class = "header">
         <ul type = "none">
-            <li><a href="index_admin.php"> HOME </a></li>
+            <li><a href="index_farmer.php"> HOME </a></li>
 			<li><a href=""> ABOUT US </a></li>
 			<li><a href=""> CONTACT US </a></li>
         </ul>
     </div>
 
-
-    <div class="sign_farmer">
+    <div class="change_farmer">
     <img src="SFLogo.png" class="logo" width = "210" height = "105" >
 
-    <h1> Signup </h1>
+    <h1> Change Password </h1>
 
         <form action="" method="POST">
             
-            <input type = "text" name = "adm_first_name" placeholder = " Enter First Name" value="<?php echo $first_name; ?>" required>
+			<input type="email" name="email_address" placeholder=" Enter email address" value="<?php echo $email_address; ?>" required>
 
             <br>
             <br>
 
-            <input type = "text" name = "adm_last_name" placeholder = " Enter Last Name" value="<?php echo $last_name; ?>" required>
+
+			<input type="password" name="opassword" placeholder=" Enter old password" value="<?php echo $opassword; ?>" required>
 
             <br>
             <br>
 
-			<input type="email" name="adm_email_address" placeholder=" Enter email address" value="<?php echo $email_address; ?>" required>
+            <input type="password" name="npassword" placeholder=" Enter new password" value="<?php echo $npassword; ?>" required>
 
             <br>
             <br>
 
-			<input type="phone" name="adm_phone_number" placeholder=" Enter phone number" value="<?php echo $phone_number; ?>" required>
-
-            <br>
-
-            
-            <br>
-
-			<input type="password" name="adm_password" placeholder=" Enter password" value="<?php echo $password; ?>" required>
-
-            <br>
-            <br>
-
-			<input type="password" name="adm_cpassword" placeholder=" Confirm password" value="<?php echo $cpassword; ?>" required>
+			<input type="password" name="cpassword" placeholder=" Confirm new password" value="<?php echo $cpassword; ?>" required>
 
             <br>
             <br>
             
-            <input class = "register" type="submit" name="register" value="REGISTER">
+            <input class = "change" type="submit" name="change" value="CHANGE PASSWORD">
 
-            <p id = "account">Already have an account? <a  href = "login_admin.php"> LOG IN</a> </p>
-            <a href="index.php">Back To Home</a>
             
             <br>        
         </form>

@@ -7,22 +7,22 @@ error_reporting(0);
 
 if(isset($_POST['forgot_pass'])){
      
-    $email_address = $_POST['email_address'];
-    $npassword = md5($_POST['npassword']);
-    $cpassword = md5($_POST['cpassword']);
+    $adm_email_address = $_POST['adm_email_address'];
+    $adm_npassword = md5($_POST['adm_npassword']);
+    $adm_cpassword = md5($_POST['adm_cpassword']);
 
-    if($npassword == $cpassword){
-        $sql = "SELECT * FROM sellers_table WHERE email_address='$email_address'";
+    if($adm_npassword == $adm_cpassword){
+        $sql = "SELECT * FROM admin_table WHERE adm_email_address='$adm_email_address'";
         $result = mysqli_query($conn, $sql);
         if($result-> num_rows > 0){
 
-            $sql = "UPDATE sellers_table set password='$npassword' where email_address='$email_address'";
+            $sql = "UPDATE admin_table set adm_password='$adm_npassword' where adm_email_address='$adm_email_address'";
             $result = mysqli_query($conn, $sql);
             if($result){
                 echo "<script>alert('Yay! Password Successfully Updated.')</script>";
-                $email_address = "";
-                $npassword = "";
-                $cpassword = "";
+                $adm_email_address = "";
+                $adm_npassword = "";
+                $adm_cpassword = "";
                 
             }else{
                 echo "<script>alert('Oops! Something Wrong Went.')</script>";
@@ -116,16 +116,16 @@ if(isset($_POST['forgot_pass'])){
     
     <form action="" method="POST">
 
-        <input class = "text" type="email" name="email_address" placeholder=" Enter email address "  required>
+        <input class = "text" type="email" name="adm_email_address" placeholder=" Enter email address "  required>
 
         <br>
         <br>
-        <input class = "text" type="password" name="npassword" placeholder=" Enter New password"  required>
+        <input class = "text" type="password" name="adm_npassword" placeholder=" Enter New password"  required>
 
         <br>
         <br>
 
-		<input class = "text" type="password" name="cpassword" placeholder=" Confirm New password"  required>
+		<input class = "text" type="password" name="adm_cpassword" placeholder=" Confirm New password"  required>
 
         <br>
         <br>

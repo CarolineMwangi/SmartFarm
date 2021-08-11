@@ -226,6 +226,7 @@ if (isset($_POST['submit'])) {
 				<button type="submit" class="btn" name="submit">Sign-up</button>
 			</div>
 			<p class="login-last">Already have an existing account?<a href="login_user.php">Login here.</a></p>
+			<a href="index.php">Back To Home</a>
 
 		</form>
 	</div>

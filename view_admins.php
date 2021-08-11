@@ -255,7 +255,8 @@ $result1 = mysqli_query($conn,$sql);
         <div class="dropdown_profile">
 			    <button class="dropbtn3"><?php echo "WELCOME, " . $_SESSION['username'] . ""; ?></button>
                 <div class="dropdown-profile">
-                    <a href="">Manage Account</a>
+                    <a href="">Manage Profile</a>
+                    <a href="changepassword_admin.php">Change Password</a>
                     <a href="logout_admin.php">Logout</a>
                 </div>
             </div>
@@ -272,6 +273,8 @@ $result1 = mysqli_query($conn,$sql);
                      <a href="view_buyers.php">View Buyers</a>
                      <a href="view_admins.php">View Admins</a>
                      <a href="signup_admin.php">Add Admins</a>
+                     <a href="add_seller.php">Add Sellers</a>
+                     <a href="add_buyer.php">Add Buyers</a>
                  </div>
             </div>
     </div>
@@ -309,7 +312,7 @@ $result1 = mysqli_query($conn,$sql);
                 <td><?php echo $row['adm_email_address'];?></td>
                 <td><?php echo $row['adm_phone_number'];?></td>
                 <td><?php echo $row['adm_password'];?></td>
-                <td><a class="link" href="">Update Password</a></td>
+                <td><a class="link" href="forgot_pass_admin.php">Update Password</a></td>
                 <td><a class="link" href="">Suspend Account</a></td>
             </tr>
             <?php } ?>

@@ -24,7 +24,7 @@ if (!isset($_SESSION['username'])) {
         .logo1
         {
             display: block;
-            margin-left:540px;
+            
             margin-right:auto;
             width: 100%
             float: center;
@@ -33,6 +33,7 @@ if (!isset($_SESSION['username'])) {
         {
             width: 1366px;
             height:110px;
+            
         }
         .header
         {
@@ -294,7 +295,8 @@ if (!isset($_SESSION['username'])) {
         <div class="dropdown_profile">
 			    <button class="dropbtn3"><?php echo "WELCOME, " . $_SESSION['username'] . ""; ?></button>
                 <div class="dropdown-profile">
-                    <a href="">Manage Account</a>
+                    <a href="">Manage Profile</a>
+                    <a href="changepassword_farmer.php">Change Password</a>
                     <a href="logout_farmer.php">Logout</a>
                 </div>
             </div>

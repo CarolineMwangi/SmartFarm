@@ -58,7 +58,7 @@ if (empty($password)) {
 
 		if ($num>0) {
 			$bn=mysqli_query($con,"UPDATE users set password='".md5($password)."' where email='$email'");
-			$_SESSION['msg1']="Password Changed Successfully";
+			echo "<script>alert('Password Change Successful.')</script>";
 			header("Location: login_user.php");
 		}else{
 			$_SESSION['msg2']="Old password or email is incorrect";
@@ -75,7 +75,7 @@ if (empty($password)) {
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width-device-width, initial-scale=1.0">
-	<title>Change Password form</title>
+	<title>Change Password User</title>
 </head>
 <body>
 	<style type="text/css">
@@ -92,9 +92,6 @@ if (empty($password)) {
 		body {
 			width: 100%;
 			min-height: 100vh;
-			background-image: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url(backie.jpg) ;
-			background-position: center;
-			background-size: cover;
 			display: flex;
 			justify-content: center;
 			align-items:center;
@@ -147,37 +144,32 @@ if (empty($password)) {
 
 		.container .login-email .input-group {
 			width: 100%;
-			height: 50px;
+			height: 30px;
 			margin-bottom: 25px;
 		}
 
 		.container .login-email .input-group input {
 			width: 100%;
 			height: 100%;
-			border: 2px solid #e7e7e7;
-			padding: 15px 20px;
-			font-size: 1rem;
+			padding: 20px 20px;
+			font-size: 13px;
 			border-radius: 30px;
-			background: transparent;
+			background: transparent; 
 			outline: none;
 			transition: .3s;
 		}
-		.container .login-email .input-group input:focus, .container .login-email .input-group input:valid {
-			border-color: #a29bfe;
-		}
+	
 		.container .login-email .input-group .btn {
-			display: block;
-			width: 100%;
-			padding: 15px 20px;
+			padding: 10px 50px;
 			text-align: center;
-			border: none;
-			background: #a29bfe;
-			outline: none;
-			border-radius: 30px;
-			font-size: 1.2rem;
-			color: #fff;
+			text-decoration: none;
+			display: inline-block;
+			margin-top:4px;
+			margin-left:60px;
 			cursor: pointer;
-			transition: .3s;
+			border-radius: 16px;
+			border:none;
+			background-color:#AFEEEE;
 		}
 
 		.container .login-email .input-group .btn:hover {
@@ -198,28 +190,10 @@ if (empty($password)) {
 
 
 
-
-
-
-
-
-
-
 	</style>
 
-
-
-
-
-
-
-
-
-
-
-
 	<div class="container">
-		<img src="logo.png" class="avatar">
+		<img src="logo.png" class="avatar" width = "190" height = "110" >
 		<?php
 		if(isset($_SESSION['msg1'])){
 			?>
@@ -251,33 +225,38 @@ if (empty($password)) {
 			</div>
 				<?php endif ?>
 
-			<p class="login-text" style="font-size: 2rem; font-weight: 800;">Change Password</p>
+			<p class="login-text" style="font-size: 20px; font-weight: 800;">Change Password</p>
 			<div class="input-group">
 
 				<input type="email" placeholder="Email" name="email" value="<?php if(isset($_POST['email'])){
 					echo $_POST['email'];
 				} ?>">
 			</div>
+			<br>
 			<div class="input-group">
 				<input type="password" placeholder="Old Password" name="opassword" value="<?php if(isset($_POST['opassword'])){
 					echo $_POST['opassword'];
 				} ?>" >
 			</div>
+			<br>
 			<div class="input-group">
 				<input type="password" placeholder="New Password" name="password" value="<?php if(isset( $_POST['password'])){
 					echo $_POST['password'];
 				} ?>" >
 			</div>
+			<br>
 			<div class="input-group">
 				<input type="password" placeholder="Confirm Password" name="cpassword" value="<?php if(isset($_POST['cpassword'])){
 					echo $_POST['cpassword'];
 				} ?>" >
 			</div>
+			<br>
 			<div class="input-group">
 				<button name="submit" class="btn">Change Password</button>
 			</div>
+			<br>
 			<div class="">
-			<p class="login-last"><a href="login_user.php">Login here.</a></p>
+			<p class="login-last"><a href="index_user.php">Back To Home</a></p>
 		</div>
 
 

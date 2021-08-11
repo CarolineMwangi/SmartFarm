@@ -123,7 +123,9 @@ if (isset($_POST['submit'])) {
         <br>
         <br>
 
-        <a href="forgot_pass_farmer.php">Forgot Password? </a>
+        <a href="forgot_pass_admin.php">Forgot Password? </a>
+        <br>
+        <a href="index.php">Back To Home</a>
         
         <br>
 
