@@ -47,7 +47,6 @@ if (isset($_POST['submit'])) {
 				$password = "";
 				$cpassword = "";
 
-				header("Location: login_user.php");
 			}else{
 				echo "<script>alert('Oops! Something Wrong Went.')</script>";
 			}
