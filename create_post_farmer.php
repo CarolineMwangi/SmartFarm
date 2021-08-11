@@ -6,6 +6,38 @@ if (!isset($_SESSION['username'])) {
     header("Location: login_farmer.php");
 }
 
+if(isset($_POST['post'])){
+
+    $product_name = $_POST['product_name'];
+    $product_price = $_POST['product_price'];
+    $product_category = $_POST['product_category'];
+    $email_address = $_POST['email_address'];
+    $product_description = $_POST['product_description'];
+    $product_imagepath = $_FILES['product_imagepath'];
+
+    $ofile_name = $_FILES['product_imagepath']['name'];
+    $tmp_location = $_FILES['product_imagepath']['tmp_name'];
+
+    $file_type = substr($ofile_name, strpos($ofile_name, '.'), strlen($ofile_name));
+    $file_path = "assets/";
+    $nfile_name = time().$file_type;
+
+    if(is_uploaded_file($_FILES['product_imagepath']['tmp_name'])){
+        if(move_uploaded_file($tmp_location, $file_path.$nfile_name)){
+            $sql = "INSERT INTO products_table (product_name, product_price, seller_email, product_category, product_description, product_image) VALUES ('$product_name', '$product_price', '$email_address', '$product_category', '$product_description', '$nfile_name' ) ";
+            $result = mysqli_query($conn, $sql);
+            if ($result) {
+ 			
+                echo "<script>alert('Image has been uploaded to folder.')</script>";
+            }else{
+                echo "<script>alert('Image Not Uploaded.')</script>";
+            }
+        }
+    }
+
+    
+
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -265,7 +297,8 @@ if (!isset($_SESSION['username'])) {
         <div class="dropdown_profile">
 			    <button class="dropbtn3"><?php echo "WELCOME, " . $_SESSION['username'] . ""; ?></button>
                 <div class="dropdown-profile">
-                    <a href="">Manage Account</a>
+                    <a href="">Manage Profile</a>
+                    <a href="changepassword_farmer.php">Change Password</a>
                     <a href="logout_farmer.php">Logout</a>
                 </div>
             </div>
@@ -273,7 +306,7 @@ if (!isset($_SESSION['username'])) {
 			    <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
                     <a href="create_post_farmer.php">Create Post</a>
-                    <a href="">View Your Posts</a>
+                    <a href="view_posts_seller.php">View Your Posts</a>
                 </div>
             </div>
             <div class="dropdown_orders">
@@ -298,7 +331,7 @@ if (!isset($_SESSION['username'])) {
 
     <h1> Post Your Product </h1>
 
-        <form action="" method="POST">
+        <form action="" method="POST" enctype = "multipart/form-data">
             
             <input class="input" type = "text" name = "product_name" placeholder = " Enter Product Name"  required>
 
@@ -335,8 +368,8 @@ if (!isset($_SESSION['username'])) {
             <br>
             <br>
 
-            <label for="product-imagepath" style="margin-left: 31px;"> Product Image: </label>
-            <input  type="file" name="product-imagepath" required="true" id="product-imagepath">
+            <label for="product_imagepath" style="margin-left: 31px;"> Product Image: </label>
+            <input  type="file" name="product_imagepath" required="true" id="product_imagepath">
 
             <br>
             <br>

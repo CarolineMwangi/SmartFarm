@@ -2,45 +2,14 @@
 
 include 'config_seller.php';
 
-error_reporting(0);
 session_start();
 
 if (!isset($_SESSION['username'])) {
     header("Location: login_admin.php");
 }
 
-if(isset($_POST['change'])){
-     
-    $adm_email_address = $_POST['adm_email_address'];
-    $adm_opassword = md5($_POST['adm_opassword']);
-    $adm_npassword = md5($_POST['adm_npassword']);
-    $adm_cpassword = md5($_POST['adm_cpassword']);
-
-    if($adm_npassword == $adm_cpassword){
-        $sql = "SELECT * FROM admin_table WHERE adm_email_address='$adm_email_address' AND adm_password = '$adm_opassword'";
-        $result = mysqli_query($conn, $sql);
-        if($result-> num_rows > 0){
-
-            $sql = "UPDATE admin_table set adm_password='$adm_npassword' where adm_email_address='$adm_email_address'";
-            $result = mysqli_query($conn, $sql);
-            if($result){
-                echo "<script>alert('Yay! Password Successfully Changed.')</script>";
-                $adm_email_address = "";
-                $adm_opassword = "";
-                $adm_npassword = "";
-                $adm_cpassword = "";
-                
-            }else{
-                echo "<script>alert('Oops! Something Wrong Went.')</script>";
-            }
-
-        }else{
-            echo "<script>alert('Oops! Invalid Details.Try again')</script>";
-        }
-    }else{
-        echo "<script>alert('Password Not Matched.')</script>";
-    }
-}
+$query = "SELECT * FROM products_table ORDER BY product_name";
+$result = mysqli_query($conn,$query);
 
 ?>
 <!DOCTYPE html>
@@ -49,9 +18,9 @@ if(isset($_POST['change'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change Password Seller</title>
+    <title>View SmartFarm Sellers</title>
     <style>
-             body
+        body
          {
              margin: 0;
              padding: auto;
@@ -60,12 +29,11 @@ if(isset($_POST['change'])){
         .logo1
         {
             display: block;
-           
+            margin-left:540px;
             margin-right:auto;
             width: 100%
             float: center;
         }
-        
         .header
         {
             width: 1366px;
@@ -235,60 +203,48 @@ if(isset($_POST['change'])){
             text-decoration:underline;
             color:red;
         }
-        .change_farmer
-        {
-            width: 370px;
-            height: 430px;
-            color:black;
-            top:40%;
-            left:37%;
-            position: absolute;
-            box-sizing: border-box;
-            padding: 5px 90px;  
-            font-size:14px;
-            font-weight:bold;
-            border:1px solid;
-            background-color:white;
-        }
         h1
         {
             text-align:center;
-            font-size: 20px;
-            text-decoration: none;
-            font: monospace;
         }
-        .change
+        .data
         {
+           margin-left:50px;
+        }
+        table,th,td
+        {
+            border: 1px ridge black;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        th
+        {
+            background-color:#AFEEEE;
+            font-size: 18px;
+            padding: 20px;
+        }
+        td
+        {
+            font-size:16px;
+            padding: 20px;
+        }
+        .link
+        {
+            color: black;
             padding: 10px 20px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
             margin-top:4px;
-           
             cursor: pointer;
             border-radius: 16px;
-            border:none;
+            border:1px solid;
             background-color:#AFEEEE;
         }
-        
-        
-        .change_farmer a
+        .link:hover
         {
-            text-decoration: none;
-            font-size: 15px;
-            line-height: 20px;
-            color: purple;
-            cursor: pointer;
-        }
-        .change_farmer a:hover
-        {
-            color:darkblue;
+            background-color:turquoise;
             text-decoration:underline;
-        }
-        .change_farmer input
-        {
-            border-radius:16px;
-            height:30px;
         }
     </style>
 </head>
@@ -303,7 +259,7 @@ if(isset($_POST['change'])){
                     <a href="logout_admin.php">Logout</a>
                 </div>
             </div>
-            <div class="dropdown_posts">
+        <div class="dropdown_posts">
 			    <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
                     <a href="view_posts_admin.php">View Posts</a>
@@ -313,7 +269,7 @@ if(isset($_POST['change'])){
 			    <a href=""><button class="dropbtn2">USERS</button></a>
                 <div class="dropdown-orders">
                      <a href="view_farmers.php">View Sellers</a>
-                     <a href="">View Buyers</a>
+                     <a href="view_buyers.php">View Buyers</a>
                      <a href="view_admins.php">View Admins</a>
                      <a href="signup_admin.php">Add Admins</a>
                      <a href="add_seller.php">Add Sellers</a>
@@ -328,40 +284,47 @@ if(isset($_POST['change'])){
 			<li><a href=""> CONTACT US </a></li>
         </ul>
     </div>
+    
+    <h1> SMART FARM PRODUCTS</h1>
+    <div class = "data">
+    <form action="" method="post">
+        <table>
+            <tr>
+                  
+                <th>Product ID</th>
+                <th>Product Image</th> 
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Product Category</th>
+                <th>Seller's Email</th>
+                <th>Product Description</th>
+                
+                <th> </th>
+                <th> </th>
+            </tr>
 
-    <div class="change_farmer">
-    <img src="SFLogo.png" class="logo" width = "210" height = "105" >
+        <?php
 
-    <h1> Change Password </h1>
+             while($rows = mysqli_fetch_assoc($result)){
 
-        <form action="" method="POST">
-            
-			<input type="email" name="adm_email_address" placeholder=" Enter email address" value="<?php echo $email_address; ?>" required>
+        ?>
 
-            <br>
-            <br>
+                    <tr>
+                        <td><?php echo $rows['product_id'];?></td>
+                        <td><?php echo '<div style="margin:5px;padding-right:10px"><img src="assets/'.$rows["product_image"].'" width="120px" height="100px"><br>';?></td>
+                        <td><?php echo $rows['product_name'];?></td>
+                        <td><?php echo $rows['product_price'];?></td>
+                        <td><?php echo $rows['product_category'];?></td>
+                        <td><?php echo $rows['seller_email'];?></td>
+                        <td><?php echo $rows['product_description'];?></td>
+                        <td><a class= "link" href="">Update Products</a></td>
+                        <td><a class= "link" href="">Disable Products</a></td>
+                    </tr>
 
+                    <?php } ?>
 
-			<input type="password" name="adm_opassword" placeholder=" Enter old password" value="<?php echo $opassword; ?>" required>
-
-            <br>
-            <br>
-
-            <input type="password" name="adm_npassword" placeholder=" Enter new password" value="<?php echo $npassword; ?>" required>
-
-            <br>
-            <br>
-
-			<input type="password" name="adm_cpassword" placeholder=" Confirm new password" value="<?php echo $cpassword; ?>" required>
-
-            <br>
-            <br>
-            
-            <input class = "change" type="submit" name="change" value="CHANGE PASSWORD">
-
-            
-            <br>        
-        </form>
+        </table>
+    </form>
     </div>
 </body>
 </html>
