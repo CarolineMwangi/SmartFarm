@@ -262,7 +262,7 @@ $result = mysqli_query($conn,$query);
         <div class="dropdown_posts">
 			    <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
-                    <a href="">View Posts</a>
+                    <a href="view_posts_admin.php">View Posts</a>
                 </div>
             </div>
             <div class="dropdown_orders">
@@ -295,7 +295,6 @@ $result = mysqli_query($conn,$query);
                 <th>Last Name</th>
                 <th>Email Address</th>
                 <th>Phone Number</th>
-                <th>Password</th>
                 <th> </th>
                 <th> </th>
             </tr>
@@ -312,7 +311,6 @@ $result = mysqli_query($conn,$query);
                         <td><?php echo $rows['last_name'];?></td>
                         <td><?php echo $rows['email_address'];?></td>
                         <td><?php echo $rows['phone_number'];?></td>
-                        <td><?php echo $rows['password'];?></td>
                         <td><a class= "link" href="forgot_pass_farmer.php">Update Password</a></td>
                         <td><a class= "link" href="">Suspend Account</a></td>
                     </tr>

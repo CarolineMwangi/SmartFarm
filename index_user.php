@@ -630,7 +630,8 @@ section{
                 <a href="index_user.php">Home</a>
                 
                 <?php if (isset($_SESSION['email_address'])): ?> 
-                
+
+                    <a href="view_posts_buyer.php">Shop Products</a>
                      <a href="profile_user.php">Profile</a>
 
                 

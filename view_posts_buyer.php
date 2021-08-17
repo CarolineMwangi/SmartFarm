@@ -4,13 +4,12 @@ include 'config_seller.php';
 
 session_start();
 
-if (!isset($_SESSION['username'])) {
-    header("Location: login_admin.php");
+if (!isset($_SESSION['email_address'])) {
+    header("Location: login_user.php");
 }
 
-$name = $_SESSION['username'];
 
-$query = "SELECT * FROM products_table where seller_email = '$name'  ORDER BY product_name";
+$query = "SELECT * FROM products_table ORDER BY product_name";
 $result = mysqli_query($conn,$query);
 
 ?>
@@ -211,7 +210,7 @@ $result = mysqli_query($conn,$query);
         }
         .data
         {
-           margin-left:50px;
+           margin-left:10px;
         }
         table,th,td
         {
@@ -251,39 +250,7 @@ $result = mysqli_query($conn,$query);
     </style>
 </head>
 <body>
-<div class = "logo">
-        <img src="SFLogo.png" class = "logo1" width = "210" height = "105">
-        <div class="dropdown_profile">
-			    <button class="dropbtn3"><?php echo "WELCOME, " . $_SESSION['username'] . ""; ?></button>
-                <div class="dropdown-profile">
-                    <a href="">Manage Profile</a>
-                    <a href="changepassword_farmer.php">Change Password</a>
-                    <a href="logout_farmer.php">Logout</a>
-                </div>
-            </div>
-            <div class="dropdown_posts">
-			    <button class="dropbtn1">POSTS</button>
-                <div class="dropdown-posts">
-                    <a href="create_post_farmer.php">Create Post</a>
-                    <a href="view_posts_seller.php">View Your Posts</a>
-                </div>
-            </div>
-            <div class="dropdown_orders">
-			    <a href=""><button class="dropbtn2">ORDERS</button></a>
-                <div class="dropdown-orders">
-                     <a href="">All Orders</a>
-                     <a href="">Dispatched Orders</a>
-                     <a href="">Pending Orders</a>
-                 </div>
-            </div>
-    </div>
-    <div class = "header">
-        <ul type = "none">
-            <li><a href="index_farmer.php"> HOME </a></li>
-			<li><a href=""> ABOUT US </a></li>
-			<li><a href=""> CONTACT US </a></li>
-        </ul>
-    </div>
+
     
     <h1> SMART FARM PRODUCTS</h1>
     <div class = "data">
@@ -298,8 +265,7 @@ $result = mysqli_query($conn,$query);
                 <th>Product Category</th>
                 <th>Seller's Email</th>
                 <th>Product Description</th>
-                
-                <th> </th>
+                <th>Quantity</th>
                 <th> </th>
             </tr>
 
@@ -317,8 +283,8 @@ $result = mysqli_query($conn,$query);
                         <td><?php echo $rows['product_category'];?></td>
                         <td><?php echo $rows['seller_email'];?></td>
                         <td><?php echo $rows['product_description'];?></td>
-                        <td><a class= "link" href="">Update Products</a></td>
-                        <td><a class= "link" href="">Disable Products</a></td>
+                        <td><input type="number" name="quantity" min = "0"  required style = "width:40px;"></td>
+                        <td><a class= "link" href="">Add to Cart</a></td>
                     </tr>
 
                     <?php } ?>
