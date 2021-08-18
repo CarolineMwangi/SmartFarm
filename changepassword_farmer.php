@@ -307,7 +307,7 @@ if(isset($_POST['change'])){
 			    <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
                     <a href="create_post_farmer.php">Create Post</a>
-                    <a href="">View Your Posts</a>
+                    <a href="view_posts_seller.php">View Your Posts</a>
                 </div>
             </div>
             <div class="dropdown_orders">

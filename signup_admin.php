@@ -317,7 +317,7 @@ if (isset($_POST['register'])) {
             <div class="dropdown_posts">
 			    <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
-                    <a href="">View Posts</a>
+                    <a href="view_posts_admin.php">View Posts</a>
                 </div>
             </div>
             <div class="dropdown_orders">
