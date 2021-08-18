@@ -675,7 +675,7 @@ section{
         <div class="content" style = "margin-left:30px;">
             <span>fresh and organic</span>
             <h3>Your daily need product</h3>
-            <a href="#" class="btn">get started</a>
+            <a href="view_posts_user.php" class="btn">get started</a>
         </div>
         
 
@@ -717,7 +717,7 @@ section{
                 <h3>Vegetables</h3>
                 <p>up to 50% off</p>
                 <img src="onions2.jpg" alt="">
-                <a href="#" class="btn">Shop now</a>
+                <a href="view_posts_user.php" class="btn">Shop now</a>
             </div>
             <div class="box">
                 <h3>Fruits</h3>

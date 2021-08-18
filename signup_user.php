@@ -198,7 +198,7 @@ if (isset($_POST['submit'])) {
 			
 			
 			<p class="login-text" >Sign-up</p>
-			<br>
+			
 
 			
 			<div class="input-group">
