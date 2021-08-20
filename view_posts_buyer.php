@@ -12,6 +12,69 @@ if (!isset($_SESSION['email_address'])) {
 $query = "SELECT * FROM products_table ORDER BY product_name";
 $result = mysqli_query($conn,$query);
 
+if (isset($_POST['add_to_cart'])&&isset($_POST['product_id'])) {
+   
+   if (isset($_SESSION['shopping_cart'])) {
+
+       $item_aray_id=array_column($_SESSION['shopping_cart'], 'product_id');
+
+       if (!in_array($_POST['product_id'], $item_aray_id)) {
+
+        $count=count($_SESSION['shopping_cart']);
+        $item_array=array(
+        'product_id'=> $_POST['product_id'],
+        'product_image'=> $_POST['product_image'],
+        'product_name'=> $_POST['product_name'],
+        'product_price'=> $_POST['product_price'],
+        'product_category'=> $_POST['product_category'],
+        'sellers_email'=> $_POST['seller_email'],
+        'product_description'=> $_POST['product_description'],
+        'quantity'=> $_POST['quantity'],
+        );
+
+        $_SESSION['shopping_cart'][$count]=$item_array;
+
+
+           
+       }else{
+
+        echo '<script>alert("Item Already Added")</script>';
+        echo '<script>window.location="view_posts_buyer.php"</script>';
+
+       }
+   }
+   else{
+    $item_array=array(
+        'product_iid'=> $_POST['product_id'],
+        'product_image'=> $_POST['product_image'],
+        'product_name'=> $_POST['product_name'],
+        'product_price'=> $_POST['product_price'],
+        'product_category'=> $_POST['product_category'],
+        'sellers_email'=> $_POST['seller_email'],
+        'product_desrciption'=> $_POST['product_description'],
+        'quantity'=> $_POST['quantity'],
+
+    );
+    $_SESSION['shopping_cart'][0]=$item_array;
+
+   }
+   
+
+}
+
+if (isset($_GET['action'])) {
+    if ($_GET['action']=="delete") {
+       foreach ($_SESSION['shopping_cart'] as $keys => $values) {
+           if ($values['product_id']==$_GET['product_id']) {
+               unset($_SESSION['shopping_cart'][$keys]);
+               echo '<script>alert("Item Removed")</script>';
+               echo '<script>window.location="view_posts_buyer.php"</script>';
+
+           }
+       }
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -248,8 +311,30 @@ $result = mysqli_query($conn,$query);
             text-decoration:underline;
         }
     </style>
+
+    
+
 </head>
 <body>
+    <div class = "logo">
+        <img src="SFLogo.png" class = "logo1" width = "210" height = "105">
+        <div class="dropdown_profile">
+                <button class="dropbtn3"><?php echo "WELCOME, " . $_SESSION['email_address'] . ""; ?></button>
+                <div class="dropdown-profile">
+                    <a href="">Manage Profile</a>
+                    <a href="changepassword_user.php">Change Password</a>
+                    <a href="logout_user.php">Logout</a>
+                </div>
+            </div>
+           
+    </div>
+    <div class = "header">
+        <ul type = "none">
+            <li><a href="index_farmer.php"> HOME </a></li>
+            <li><a href=""> ABOUT US </a></li>
+            <li><a href=""> CONTACT US </a></li>
+        </ul>
+    </div>
 
     
     <h1> SMART FARM PRODUCTS</h1>
@@ -258,7 +343,7 @@ $result = mysqli_query($conn,$query);
         <table>
             <tr>
                   
-                <th>Product ID</th>
+                
                 <th>Product Image</th> 
                 <th>Product Name</th>
                 <th>Product Price</th>
@@ -266,8 +351,49 @@ $result = mysqli_query($conn,$query);
                 <th>Seller's Email</th>
                 <th>Product Description</th>
                 <th>Quantity</th>
-                <th> </th>
+                <th></th>
+                
             </tr>
+            <?php
+            
+            if (!empty($_SESSION['shopping_cart'])) {
+                $total=0; 
+                foreach ($_SESSION['shopping_cart'] as $keys => $values) {
+                   ?>
+                   <tr>
+                        <td><?php echo '<div style="margin:5px;padding-right:10px"><img src="assets/'.$values["product_image"].'" width="120px" height="100px"><br>';?></td>
+                            <td><?php echo $values['product_name']?></td>
+                            <td><?php echo $values['product_price']?></td>
+                            <td><?php echo number_format($values['quantity'] * $values['product_price'],2); ?></td>
+                            <td><?php echo $values['product_category']?></td>
+                            <td><?php echo $values['sellers_email']?></td>
+                            <td><?php echo $values['product_description']?></td>
+                            <td><a href="view_posts_buyer.php?action=delete&product_id=<?php echo $values['product_id']; ?>"><span class="text-danger">Remove</span></a></td>
+                   </tr>
+                   <?php
+
+                   $total=$total+ ($values['quantity'] * $values['product_price']);
+
+                }
+                ?>
+
+                <tr>
+                    <td colspan="3" align="right">Totat Amount:  </td>
+                    <td align="right"><?php echo number_format($total,2); ?></td>
+                </tr>
+
+
+                <?php
+
+
+
+                
+                
+
+
+            }
+            ?>
+                       
 
         <?php
 
@@ -276,15 +402,22 @@ $result = mysqli_query($conn,$query);
         ?>
 
                     <tr>
-                        <td><?php echo $rows['product_id'];?></td>
+                        
                         <td><?php echo '<div style="margin:5px;padding-right:10px"><img src="assets/'.$rows["product_image"].'" width="120px" height="100px"><br>';?></td>
                         <td><?php echo $rows['product_name'];?></td>
                         <td><?php echo $rows['product_price'];?></td>
                         <td><?php echo $rows['product_category'];?></td>
                         <td><?php echo $rows['seller_email'];?></td>
                         <td><?php echo $rows['product_description'];?></td>
-                        <td><input type="number" name="quantity" min = "0"  required style = "width:40px;"></td>
-                        <td><a class= "link" href="">Add to Cart</a></td>
+                        <td><input type="number" name="quantity" min = "0"  required style = "width:40px;" ></td>
+                        <input type="text" name="product_image" value="<?php echo $rows['product_image']; ?>" hidden>
+                        <input type="text" name="product_id" value="<?php echo $rows['product_id']; ?>" hidden>
+                        <input type="text" name="product_name" value="<?php echo $rows['product_name']; ?>" hidden>
+                        <input type="text" name="product_price" value="<?php echo $rows['product_price']; ?>" hidden>
+                        <input type="text" name="product_category" value="<?php echo $rows['product_category']; ?>" hidden>
+                        <input type="text" name="seller_email" value="<?php echo $rows['seller_email']; ?>" hidden>
+                        <input type="text" name="product_description" value="<?php echo $rows['product_description']; ?>" hidden>
+                        <td><input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart"></td>
                     </tr>
 
                     <?php } ?>

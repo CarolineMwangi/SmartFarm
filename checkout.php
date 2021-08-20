@@ -3,16 +3,12 @@
 include 'config_seller.php';
 
 session_start();
-
-/*if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['email_address'])) {
     header("Location: login_user.php");
 }
 
-$name = $_SESSION['username'];
-
-$query = "SELECT * FROM products_table where seller_email = '$name'  ORDER BY product_name";
+$query = "SELECT * FROM products_table ORDER BY product_name";
 $result = mysqli_query($conn,$query);
-*/
 
 ?>
 <!DOCTYPE html>

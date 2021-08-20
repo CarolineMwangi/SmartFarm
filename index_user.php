@@ -641,7 +641,7 @@ section{
                          <a href="changepassword_user.php">Change password</a>
 
                 <?php endif ?>
-                <a href="#">About us</a>
+                <a href="about_us.php">About us</a>
                 <a href="#">Contact Us</a>
 
                 <?php if (isset($_SESSION['email_address'])): ?> 
