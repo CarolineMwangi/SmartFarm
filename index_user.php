@@ -652,7 +652,7 @@ section{
             </nav>
 
             <div class="icons">
-                <a href="#" class="fas fa-shopping-basket"></a>
+                <a href="view_posts_buyer.php" class="fas fa-shopping-basket"></a>
                 <a href="#" class="fas fa-heart"></a>
                 <a href="profile_user.php" class="fas fa-user-circle"></a>
 
