@@ -45,7 +45,7 @@ if (isset($_POST['add_to_cart'])&&isset($_POST['product_id'])) {
    }
    else{
     $item_array=array(
-        'product_iid'=> $_POST['product_id'],
+        'product_id'=> $_POST['product_id'],
         'product_image'=> $_POST['product_image'],
         'product_name'=> $_POST['product_name'],
         'product_price'=> $_POST['product_price'],
@@ -969,10 +969,12 @@ section{
                 <th>Product Image</th> 
                 <th>Product Name</th>
                 <th>Product Price</th>
+                <th>Quantity</th>
+                <th>Total Amount</th>
                 <th>Product Category</th>
                 <th>Seller's Email</th>
                 <th>Product Description</th>
-                <th>Quantity</th>
+                
                 <th></th>
                 
             </tr>
@@ -981,11 +983,13 @@ section{
             if (!empty($_SESSION['shopping_cart'])) {
                 $total=0; 
                 foreach ($_SESSION['shopping_cart'] as $keys => $values) {
+                    
                    ?>
                    <tr>
                         <td><?php echo '<div style="margin:5px;padding-right:10px"><img src="assets/'.$values["product_image"].'" width="120px" height="100px"><br>';?></td>
                             <td><?php echo $values['product_name']?></td>
                             <td><?php echo $values['product_price']?></td>
+                            <td><?php echo $values['quantity']?></td>
                             <td><?php echo number_format($values['quantity'] * $values['product_price'],2); ?></td>
                             <td><?php echo $values['product_category']?></td>
                             <td><?php echo $values['sellers_email']?></td>
@@ -1031,7 +1035,7 @@ section{
                         <td><?php echo $rows['product_category'];?></td>
                         <td><?php echo $rows['seller_email'];?></td>
                         <td><?php echo $rows['product_description'];?></td>
-                        <td><input type="number" name="quantity" min = "0"  required style = "width:40px;  background-color: darkgray;" ></td>
+                        <td><input type="number" name="quantity" min = "0"  style = "width:40px;  background-color: darkgray;" ></td>
                         <input type="text" name="product_image" value="<?php echo $rows['product_image']; ?>" hidden>
                         <input type="text" name="product_id" value="<?php echo $rows['product_id']; ?>" hidden>
                         <input type="text" name="product_name" value="<?php echo $rows['product_name']; ?>" hidden>
@@ -1042,10 +1046,16 @@ section{
                         <td><input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart"></td>
                     </tr>
 
+
+
                     <?php } ?>
 
+
+
         </table>
+<a href="address_user.php" class="btn">Buy Now</a>
     </form>
+
     </div>
 
     <script src="js/main.js"></script>
