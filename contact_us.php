@@ -4,15 +4,28 @@ include 'config_seller.php';
 
 session_start();
 
-if (!isset($_SESSION['email_address'])) {
-    header("Location: login_user.php");
+if (isset($_POST['send'])){
+
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
+
+    $sql = "INSERT INTO messages (name, email, phone, subject, message)
+					VALUES ('$name', '$email', '$phone', '$subject', '$message')";
+    $result = mysqli_query($conn, $sql);
+    if ($result) {
+        echo "<script>alert('Thank you for your message. We will get back to you soon.')</script>";
+        $name = "";
+        $email = "";
+        $phone = "";
+        $subject = "";
+        $message = "";
+    } else {
+        echo "<script>alert('Oops! Something Wrong Went.')</script>";
+    }
 }
-
-
-
-
-
-
 
 ?>
 <!DOCTYPE html>
@@ -34,33 +47,20 @@ if (!isset($_SESSION['email_address'])) {
 						<h2 class="text-center py-2">Contact US</h2>
 						<hr>
 
-						<?php
-						$msg="";
-						if (isset($_GET['error'])) {
-							$msg="Please fill in the empty fields.";
-							echo '<div class="alert alert-danger">'.$msg.'</div>';
-						}
-
-						if (isset($_GET['success'])) {
-							$msg="Your message has been sent successfully!";
-							echo '<div class="alert alert-success">'.$msg.'</div>';
-						}
-
-
-
-						?>
-
-
 					</div>
 					<div class="card-body">
-						<form action="contact_process.php" method="post">
+						<form action="" method="POST">
+
 							<input type="text" name="name" placeholder="Name" class="form-control mb2">
 							<input type="email" name="email" placeholder="Email Address" class="form-control mb-s">
+							<input type="number" name = "phone" placeholder="Number" class="form-control mb-2">
 							<input type="text" name="subject" placeholder="Subject" class="form-control mb-2">
-							<textarea name="msg" class="form-control" placeholder="Enter Message"></textarea>
-							<button class="btn btn-success" name="btn">Send</button>
+							<textarea name="message" class="form-control" placeholder="Enter Message" cols="30" rows="10"></textarea>
+							<input type="submit" name = "send" value="SEND MESSAGE" class="btn btn-success">
+							
 							
 						</form>
+					
 					</div>
 				</div>
 			</div>

@@ -14,7 +14,7 @@
 			margin: 0px;
 			padding: 0px;
 			box-sizing: border-box;
-			font-family: 'Poppins', sans-serif;
+			font-family: 'Times New Roman', serif;
 		}
 		.section{
 			width: 100%;
@@ -41,17 +41,18 @@
 		}
 		.content-section .title{
 			text-transform: uppercase;
-			font-size: 28px;
+			font-size: 40px;
 		}
 		.content-section .content h3{
-			margin-top: 20px;
+			margin-top: 30px;
 			color: #5d5d5d;
-			font-size: 21px;
+			font-size: 25px;
+
 		}
 		.content-section .content p{
 			margin-top: 10px;
 			font-family: sans-serif;
-			font-size: 18 px;
+			font-size: 32 px;
 			line-height: 1.5;
 		}
 		.content-section .content .button{
@@ -135,22 +136,20 @@
 
 
 
-
-
-
-
-
 	<div class="section">
 		<div class="container">
 			<div class="content-section">
 				<div class="title">
-					<h1>About Us</h1>
+					<h1>SmartFarm</h1>
 				</div>
-				<div class="content"></div>
-				<h3>We are an organization blah blah blah</h3>
-				<p>Blah blah blah</p>
-				<div class="button">
-					<a href="">Read More</a>
+				<div class="content">
+				<h3>AN APPLICATION THAT OFFERS REAL FARM FRESHNESS</h3>
+				<p>Smartfarm aims to provide an excellent platform where farmers and consumers can interact freely through advertisement and purchase of quality and fresh farm products.</p>
+				
+				<br>
+				<br>
+				<br>
+
 				</div>
 			
 			<div class="social">
