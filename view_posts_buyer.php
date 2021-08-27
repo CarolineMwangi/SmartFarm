@@ -986,10 +986,10 @@ section{
                         <td><?php echo '<div style="margin:5px;padding-right:10px"><img src="assets/'.$values["product_image"].'" width="120px" height="100px"><br>';?></td>
                             <td><?php echo $values['product_name']?></td>
                             <td><?php echo $values['product_price']?></td>
-                            <td><?php echo number_format($values['quantity'] * $values['product_price'],2); ?></td>
                             <td><?php echo $values['product_category']?></td>
                             <td><?php echo $values['sellers_email']?></td>
                             <td><?php echo $values['product_description']?></td>
+                            <td><?php echo number_format($values['quantity'] * $values['product_price'],2); ?></td>
                             <td><a href="view_posts_buyer.php?action=delete&product_id=<?php echo $values['product_id']; ?>"><span class="text-danger">Remove</span></a></td>
                    </tr>
                    <?php
@@ -1000,7 +1000,7 @@ section{
                 ?>
 
                 <tr>
-                    <td colspan="3" align="right">Totat Amount:  </td>
+                    <td colspan="3" align="right">Total Amount:  </td>
                     <td align="right"><?php echo number_format($total,2); ?></td>
                 </tr>
 
@@ -1031,7 +1031,7 @@ section{
                         <td><?php echo $rows['product_category'];?></td>
                         <td><?php echo $rows['seller_email'];?></td>
                         <td><?php echo $rows['product_description'];?></td>
-                        <td><input type="number" name="quantity" min = "0"  required style = "width:40px;  background-color: darkgray;" ></td>
+                        <td><input type="number" name="quantity" min = "0" style = "width:40px;  background-color: darkgray;" ></td>
                         <input type="text" name="product_image" value="<?php echo $rows['product_image']; ?>" hidden>
                         <input type="text" name="product_id" value="<?php echo $rows['product_id']; ?>" hidden>
                         <input type="text" name="product_name" value="<?php echo $rows['product_name']; ?>" hidden>
