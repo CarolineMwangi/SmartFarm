@@ -1,17 +1,25 @@
 <?php 
-
 include 'config_seller.php';
-
 session_start();
 
 if (!isset($_SESSION['username'])) {
     header("Location: login_admin.php");
 }
 
-$name = $_SESSION['username'];
+$ProductID = $_GET['GetID'];
+$sql = "SELECT * FROM products_table WHERE product_id = '".$ProductID."'";
+$result = mysqli_query($conn,$sql);
 
-$query = "SELECT * FROM products_table where seller_email = '$name'  ORDER BY product_name";
-$result = mysqli_query($conn,$query);
+while($rows=mysqli_fetch_assoc($result))
+{
+    $ProductID = $rows['product_id'];
+    $Name = $rows['product_name'];
+    $Price = $rows['product_price'];
+    $Category =  $rows['product_category'];
+    $Email = $rows['seller_email'];
+    $Description =  $rows['product_description'];
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -20,7 +28,7 @@ $result = mysqli_query($conn,$query);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View SmartFarm Sellers</title>
+    <title>Update Your Product Details</title>
     <style>
         body
          {
@@ -35,6 +43,13 @@ $result = mysqli_query($conn,$query);
             margin-right:auto;
             width: 100%
             float: center;
+        }
+        .logo
+        {
+            display: block;
+        margin-left:auto;
+        margin-right:auto;
+        width: 100%
         }
         .header
         {
@@ -205,53 +220,62 @@ $result = mysqli_query($conn,$query);
             text-decoration:underline;
             color:red;
         }
-        h1
-        {
-            text-align:center;
-        }
-        .data
-        {
-           margin-left:50px;
-        }
-        table,th,td
-        {
-            border: 1px ridge black;
-            text-align: center;
-            border-collapse: collapse;
-        }
-        th
-        {
-            background-color:#AFEEEE;
-            font-size: 18px;
-            padding: 20px;
-        }
-        td
-        {
-            font-size:16px;
-            padding: 20px;
-        }
-        .link
-        {
-            color: black;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            margin-top:4px;
-            cursor: pointer;
-            border-radius: 16px;
-            border:1px solid;
-            background-color:#AFEEEE;
-        }
-        .link:hover
-        {
-            background-color:turquoise;
-            text-decoration:underline;
-        }
+        .post_farmer
+     {
+         width: 370px;
+         height: 710px;
+         color:black;
+         top:40%;
+         left:37%;
+         position: absolute;
+         box-sizing: border-box;
+         padding: 5px 90px;  
+         font-size:14px;
+         font-weight:bold;
+         border:1px solid;
+         background-color:white;
+     }
+     h1
+     {
+         text-align:center;
+         font-size: 23px;
+         text-decoration: none;
+         font: monospace;
+       
+     }
+     .input
+     {
+         border-radius:16px;
+         height:30px;
+     }
+     #des
+     {
+         width: 200px;
+         height: 100px;
+         border-radius:16px;
+     }
+     #post
+     {
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin-top:4px;
+        margin-left:40px;
+        cursor: pointer;
+        border-radius: 16px;
+        border:none;
+        background-color:#AFEEEE;
+     }
+     #post:hover
+     {
+         background-color:turquoise;
+         font-weight:bold;
+     }
     </style>
 </head>
 <body>
-<div class = "logo">
+    <div class = "logo">
         <img src="SFLogo.png" class = "logo1" width = "210" height = "105">
         <div class="dropdown_profile">
 			    <button class="dropbtn3"><?php echo "WELCOME, " . $_SESSION['username'] . ""; ?></button>
@@ -261,7 +285,7 @@ $result = mysqli_query($conn,$query);
                     <a href="logout_farmer.php">Logout</a>
                 </div>
             </div>
-            <div class="dropdown_posts">
+        <div class="dropdown_posts">
 			    <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
                     <a href="create_post_farmer.php">Create Post</a>
@@ -280,51 +304,66 @@ $result = mysqli_query($conn,$query);
     <div class = "header">
         <ul type = "none">
             <li><a href="index_farmer.php"> HOME </a></li>
-			<li><a href=""> ABOUT US </a></li>
-			<li><a href=""> CONTACT US </a></li>
+			<li><a href="about_us.php"> ABOUT US </a></li>
+			<li><a href="contact_us.php"> CONTACT US </a></li>
         </ul>
     </div>
-    
-    <h1> SMART FARM PRODUCTS</h1>
-    <div class = "data">
-    <form action="" method="post">
-        <table>
-            <tr>
-                  
-                <th>Product ID</th>
-                <th>Product Image</th> 
-                <th>Product Name</th>
-                <th>Product Price</th>
-                <th>Product Category</th>
-                <th>Seller's Email</th>
-                <th>Product Description</th>
-                
-                <th> </th>
-                <th> </th>
-            </tr>
+    <div class="post_farmer">
 
-        <?php
+    <img src="SFLogo.png" class="logo" width = "210" height = "105" >
 
-             while($rows = mysqli_fetch_assoc($result)){
+    <h1> Update Your Product Details </h1>
 
-        ?>
+        <form action="edit_admin.php?ID=<?php echo $ProductID?>" method="POST" enctype = "multipart/form-data">
+            
+            <input class="input" type = "text" name = "product_name" placeholder = " Enter Product Name"  required value="<?php echo $Name?>">
 
-                    <tr>
-                        <td><?php echo $rows['product_id'];?></td>
-                        <td><?php echo '<div style="margin:5px;padding-right:10px"><img src="assets/'.$rows["product_image"].'" width="120px" height="100px"><br>';?></td>
-                        <td><?php echo $rows['product_name'];?></td>
-                        <td><?php echo $rows['product_price'];?></td>
-                        <td><?php echo $rows['product_category'];?></td>
-                        <td><?php echo $rows['seller_email'];?></td>
-                        <td><?php echo $rows['product_description'];?></td>
-                        <td><a class= "link" href="update.php?GetID=<?php echo $rows['product_id']?>">Update Products</a></td>
-                        <td><a class= "link" href="">Disable Products</a></td>
-                    </tr>
+            <br>
+            <br>
 
-                    <?php } ?>
+            <input class="input" type = "number" name = "product_price" placeholder = " Enter Product Price/Kg"  required value="<?php echo $Price?>">
 
-        </table>
-    </form>
+            <br>
+            <br>
+
+            <label for="category">Choose a category:</label>
+            <select id="product_category" name="product_category" class="input" value="<?php echo $Category?>">
+                <option value="fruits">Fruits</option>
+                <option value="vegetables">Vegetables</option>
+                <option value="dairy">Dairy</option>
+                <option value="eggs">Eggs</option>
+            </select>
+
+            <br>
+            <br>
+
+
+			<input class="input" type="email" name="email_address" placeholder=" Enter Sellers Email Address"  required value="<?php echo $Email?>">
+
+            <br>
+            <br>
+
+			
+
+            <p>Description of products and location: </p>
+			<textarea class="input" id = "des" name="product_description" placeholder=" Briefly describe your products and your location"  required value="<?php echo $Description?>"> </textarea>
+
+            <br>
+            <br>
+
+            <label for="product_imagepath" style="margin-left: 31px;"> Product Image: </label>
+            <input  type="file" name="product_imagepath" required="true" id="product_imagepath">
+
+            <br>
+            <br>
+
+            
+            <input class="input" id = "post" type="submit" name="update" value="UPDATE">
+
+            
+            
+            <br>        
+        </form>
     </div>
 </body>
 </html>

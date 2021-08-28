@@ -256,7 +256,6 @@
         <div class = "words">
         <h1>SMART FARM ONLINE SHOPPING</h1>
         <p class = "pintro"> <span style = "font-weight:bold;"> AN APPLICATION THAT OFFERS REAL FARM FRESHNESS</span> <br> Smartfarm aims to provide an excellent platform where farmers and consumers can interact freely through advertisement and purchase of quality and fresh farm products.</p>
-        <a href="login_user.php">SHOP WITH US</a>
         </div>
     </div>
 

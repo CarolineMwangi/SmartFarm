@@ -317,7 +317,7 @@ $result = mysqli_query($conn,$query);
                         <td><?php echo $rows['product_category'];?></td>
                         <td><?php echo $rows['seller_email'];?></td>
                         <td><?php echo $rows['product_description'];?></td>
-                        <td><a class= "link" href="">Update Products</a></td>
+                        <td><a class= "link" href="update_admin.php?GetID=<?php echo $rows['product_id']?>">Update Products</a></td>
                         <td><a class= "link" href="">Disable Products</a></td>
                     </tr>
 
