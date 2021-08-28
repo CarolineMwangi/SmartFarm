@@ -255,7 +255,7 @@
     <div class = "intro">
         <div class = "words">
         <h1>SMART FARM ONLINE SHOPPING</h1>
-        <p class = "pintro"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse accusantium placeat provident atque omnis repellendus in exercitationem! Vitae optio sequi mollitia, similique consectetur exercitationem? Ipsum atque reprehenderit unde illum incidunt.</p>
+        <p class = "pintro"> <span style = "font-weight:bold;"> AN APPLICATION THAT OFFERS REAL FARM FRESHNESS</span> <br> Smartfarm aims to provide an excellent platform where farmers and consumers can interact freely through advertisement and purchase of quality and fresh farm products.</p>
         <a href="login_user.php">SHOP WITH US</a>
         </div>
     </div>
@@ -263,7 +263,7 @@
     <div class = "seller">
         <div class = "words">
         <h1>ADVERTISE YOUR PRODUCTS</h1>
-        <p class = "pintro"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestiae architecto dolor aperiam natus autem! Magnam eum consequuntur tempore nulla maxime modi molestiae, iure doloremque nam deleniti natus impedit officia error.</p>
+        <p class = "pintro"> Are you a farmer that produces goods for sale? Do you want to move your business online? Sign up with us and start advertising your farm products now. You will not regret it.</p>
         <a href="login_farmer.php">POST YOUR PRODUCTS</a>
         </div>
     </div>
@@ -271,7 +271,7 @@
     <div class = "buyer">
         <div class = "words">
         <h1>SHOP FARM PRODUCE</h1>
-        <p class = "pintro"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum in molestiae nesciunt, similique, et adipisci commodi dolorem officiis numquam at quidem eaque odit voluptate, nihil necessitatibus incidunt magni ut? Nisi.</p>
+        <p class = "pintro"> Are you too busy to go get groceries from the market or store? Sign up with us and browse through farm fresh products that will be delivered right to your doorstep.</p>
         <a href="login_user.php">SHOP WITH US</a>
         </div>
     </div>

@@ -342,7 +342,7 @@ if (isset($_POST['submit'])) {
 			    <a href=""><button class="dropbtn2">USERS</button></a>
                 <div class="dropdown-orders">
                      <a href="view_farmers.php">View Sellers</a>
-                     <a href="">View Buyers</a>
+                     <a href="view_buyers.php">View Buyers</a>
                      <a href="view_admins.php">View Admins</a>
                      <a href="signup_admin.php">Add Admins</a>
                      <a href="add_seller.php">Add Sellers</a>
@@ -353,8 +353,8 @@ if (isset($_POST['submit'])) {
     <div class = "header">
         <ul type = "none">
             <li><a href="index_admin.php"> HOME </a></li>
-			<li><a href=""> ABOUT US </a></li>
-			<li><a href=""> CONTACT US </a></li>
+			<li><a href="about_us.php"> ABOUT US </a></li>
+			<li><a href="contact_us.php"> CONTACT US </a></li>
         </ul>
     </div>
 

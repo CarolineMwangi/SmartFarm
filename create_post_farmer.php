@@ -321,8 +321,8 @@ if(isset($_POST['post'])){
     <div class = "header">
         <ul type = "none">
             <li><a href="index_farmer.php"> HOME </a></li>
-			<li><a href=""> ABOUT US </a></li>
-			<li><a href=""> CONTACT US </a></li>
+			<li><a href="about_us.php"> ABOUT US </a></li>
+			<li><a href="contact_us.php"> CONTACT US </a></li>
         </ul>
     </div>
     <div class="post_farmer">
@@ -338,7 +338,7 @@ if(isset($_POST['post'])){
             <br>
             <br>
 
-            <input class="input" type = "number" name = "product_price" placeholder = " Enter Product Price"  required>
+            <input class="input" type = "number" name = "product_price" placeholder = " Enter Product Price/Kg"  required>
 
             <br>
             <br>
