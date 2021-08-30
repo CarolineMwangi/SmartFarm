@@ -194,9 +194,14 @@ session_start();
 	<div class="container">
 		<img src="logo.png" class="avatar">
 		<form action="" method="POST" class="login-email">
-			
+
+			<?php if (isset($_SESSION['email_address'])) {
+							
+						 ?>
 
 					<ul class="profile">
+
+						
 
 						
 					
@@ -204,27 +209,29 @@ session_start();
 
 						<dl>
 							<dt>First Name</dt>
-						<li><?php if (isset($_SESSION['fname'])) {
+						<li>
+							<?php
 							echo $_SESSION['fname'];
-						}?></li>
+						?>
+						</li>
 						</dl>
 						<dl>
 							<dt>Last Name</dt>
-						<li><?php if (isset($_SESSION['lname'])) {
+						<li><?php
 							echo $_SESSION['lname'];
-						}?></li>
+						?></li>
 						</dl>
 						<dl>
 							<dt>Email Address</dt>
-						<li><?php if (isset($_SESSION['email'])) {
+						<li><?php 
 							echo $_SESSION['email'];
-						}?></li>
+						?></li>
 						</dl>
 						<dl>
 							<dt>Phone Number</dt>
-						<li><?php if (isset($_SESSION['pnumber'])) {
+						<li><?php 
 							echo $_SESSION['pnumber'];
-						}?></li>
+						?></li>
 						</dl>
 					
 						
@@ -242,6 +249,15 @@ session_start();
 
 			<p class="login-last"><a href="changepassword_user.php">Change Password</a></p>
 			<p class="login-last"><a href="index_user.php">Back to home page</a></p>
+
+
+			<?php 
+		}else{
+			 echo '<script>alert("You are not logged in!")</script>';
+			 echo '<script>window.location="login_user.php"</script>';
+		}
+			?>
+		
 
 
 	

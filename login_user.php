@@ -34,6 +34,10 @@ if (isset($_POST['submit'])) {
 			
 			$row = mysqli_fetch_assoc($result);
 			$_SESSION['email_address'] = $row['email'];
+			$_SESSION['fname'] = $row['fname'];
+			$_SESSION['lname'] = $row['lname'];
+			$_SESSION['pnumber'] = $row['pnumber'];
+
 			header("Location: index_user.php");
 	
 			

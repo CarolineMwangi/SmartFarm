@@ -9,7 +9,7 @@ if (!isset($_SESSION['email_address'])) {
 }
 
 
-$query = "SELECT * FROM products_table ORDER BY product_name";
+$query = "SELECT * FROM products_table  WHERE product_category='dairy'";
 $result = mysqli_query($conn,$query);
 
 if (isset($_POST['add_to_cart'])&&isset($_POST['product_id'])) {
@@ -39,7 +39,7 @@ if (isset($_POST['add_to_cart'])&&isset($_POST['product_id'])) {
        }else{
 
         echo '<script>alert("Item Already Added")</script>';
-        echo '<script>window.location="view_posts_buyer.php"</script>';
+        echo '<script>window.location="category_dairy.php"</script>';
 
        }
    }
@@ -68,7 +68,7 @@ if (isset($_GET['action'])) {
            if ($values['product_id']==$_GET['product_id']) {
                unset($_SESSION['shopping_cart'][$keys]);
                echo '<script>alert("Item Removed")</script>';
-               echo '<script>window.location="view_posts_buyer.php"</script>';
+               echo '<script>window.location="category_dairy.php"</script>';
 
            }
        }
@@ -1009,7 +1009,7 @@ section{
                             <td><?php echo $values['product_category']?></td>
                             <td><?php echo $values['sellers_email']?></td>
                             <td><?php echo $values['product_description']?></td>
-                            <td><a href="view_posts_buyer.php?action=delete&product_id=<?php echo $values['product_id']; ?>"><span class="text-danger">Remove</span></a></td>
+                            <td><a href="category_dairy.php?action=delete&product_id=<?php echo $values['product_id']; ?>"><span class="text-danger">Remove</span></a></td>
                    </tr>
                    <?php
 
@@ -1046,7 +1046,7 @@ section{
 
         <?php } ?>
           <br>
-          <h1>Products</h1>
+          <h1>Fruits Category</h1>
             <table id="tbl_products">
               <thead>
                 <th>Product Image</th>

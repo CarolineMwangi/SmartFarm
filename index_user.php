@@ -652,8 +652,17 @@ section{
             </nav>
 
             <div class="icons">
-                <a href="view_posts_buyer.php" class="fas fa-shopping-basket"></a>
-                <a href="#" class="fas fa-heart"></a>
+                <a href="view_posts_buyer.php" class="fas fa-shopping-basket">
+                      <?php
+                    if (isset($_SESSION['shopping_cart'])) {
+                        $count=count($_SESSION['shopping_cart']);
+                        echo "<span id=\"card_count\" class=\"text-warning bg-light\">$count</span>" ;
+                    }else{
+                          echo "<span id=\"card_count\" class=\"text-warning bg-light\">0</span>" ;
+                    }
+                    ?>
+                </a>
+                
                 <a href="profile_user.php" class="fas fa-user-circle"></a>
 
 
@@ -676,7 +685,7 @@ section{
         <div class="content" style = "margin-left:30px;">
             <span>fresh and organic</span>
             <h3>Your daily need product</h3>
-            <a href="view_posts_user.php" class="btn">get started</a>
+            <a href="view_posts_buyer.php" class="btn">get started</a>
         </div>
         
 
@@ -716,15 +725,23 @@ section{
         <div class="box-container">
             <div class="box">
                 <h3>Vegetables</h3>
-                <p>up to 50% off</p>
-                <img src="onions2.jpg" alt="">
-                <a href="view_posts_user.php" class="btn">Shop now</a>
+                <img src="groupveg.jpg" alt="">
+                <a href="category_vegetables.php" class="btn">Shop now</a>
             </div>
             <div class="box">
                 <h3>Fruits</h3>
-                <p>up to 60% off</p>
-                <img src="broccoli.jpg" alt="">
-                <a href="#" class="btn">Shop now</a>
+                <img src="groupfruits.jpg" alt="">
+                <a href="category_fruits.php" class="btn">Shop now</a>
+            </div>
+              <div class="box">
+                <h3>Dairy</h3>
+                <img src="groupdairy.jpg" alt="">
+                <a href="category_dairy.php" class="btn">Shop now</a>
+            </div>
+              <div class="box">
+                <h3>Eggs</h3>
+                <img src="groupeggs.jpg" alt="">
+                <a href="category_eggs.php" class="btn">Shop now</a>
             </div>
             
         </div>
