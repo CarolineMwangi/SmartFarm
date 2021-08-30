@@ -65,7 +65,7 @@ if (isset($_POST['send'])){
             height:80px;
             background-color:#AFEEEE;
             float: center;
-            padding-left:20px;
+            padding-left:10px;
 	        border:1px solid none;
             font-weight:bold;
         }

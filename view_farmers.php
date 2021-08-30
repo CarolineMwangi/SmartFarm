@@ -8,7 +8,7 @@ if (!isset($_SESSION['username'])) {
     header("Location: login_admin.php");
 }
 
-$query = "SELECT * FROM sellers_table ORDER BY last_name";
+$query = "SELECT * FROM register ORDER BY name";
 $result = mysqli_query($conn,$query);
 
 ?>
@@ -291,10 +291,10 @@ $result = mysqli_query($conn,$query);
         <table>
             <tr>
                 <th>Seller ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Name</th>
                 <th>Email Address</th>
-                <th>Phone Number</th>
+                <th>Status</th>
+                <th> </th>
                 <th> </th>
                 <th> </th>
             </tr>
@@ -306,13 +306,13 @@ $result = mysqli_query($conn,$query);
         ?>
 
                     <tr>
-                        <td><?php echo $rows['seller_id'];?></td>
-                        <td><?php echo $rows['first_name'];?></td>
-                        <td><?php echo $rows['last_name'];?></td>
-                        <td><?php echo $rows['email_address'];?></td>
-                        <td><?php echo $rows['phone_number'];?></td>
+                        <td><?php echo $rows['id'];?></td>
+                        <td><?php echo $rows['name'];?></td>
+                        <td><?php echo $rows['email'];?></td>
+                        <td><?php echo $rows['status'];?></td>
                         <td><a class= "link" href="forgot_pass_farmer.php">Update Password</a></td>
                         <td><a class= "link" href="">Suspend Account</a></td>
+                        <td><a class= "link" href="">Unsuspend Account</a></td>
                     </tr>
 
                     <?php } ?>
