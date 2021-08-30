@@ -8,7 +8,7 @@ if (!isset($_SESSION['username'])) {
     header("Location: login_admin.php");
 }
 
-$query = "SELECT * FROM users ORDER BY lname";
+$query = "SELECT * FROM users ORDER BY user_name";
 $result = mysqli_query($conn,$query);
 
 ?>
@@ -19,7 +19,7 @@ $result = mysqli_query($conn,$query);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View SmartFarm Sellers</title>
+    <title>View SmartFarm Buyers</title>
     <style>
         body
          {
@@ -281,8 +281,8 @@ $result = mysqli_query($conn,$query);
     <div class = "header">
         <ul type = "none">
             <li><a href="index_admin.php"> HOME </a></li>
-            <li><a href=""> ABOUT US </a></li>
-            <li><a href=""> CONTACT US </a></li>
+            <li><a href="about_us.php"> ABOUT US </a></li>
+            <li><a href="contact_us.php"> CONTACT US </a></li>
         </ul>
     </div>
     
@@ -292,12 +292,12 @@ $result = mysqli_query($conn,$query);
         <table>
             <tr>
                 <th>Buyer ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email Address</th>
-                <th>Phone Number</th>
+                <th>Name</th>
+                <th>Email </th>
+                <th>Status</th>
                 <th> </th>
-                <th> </th>                
+                <th> </th> 
+                <th> </th>               
             </tr>
 
         <?php
@@ -307,13 +307,13 @@ $result = mysqli_query($conn,$query);
         ?>
 
                     <tr>
-                        <td><?php echo $rows['id'];?></td>
-                        <td><?php echo $rows['fname'];?></td>
-                        <td><?php echo $rows['lname'];?></td>
-                        <td><?php echo $rows['email'];?></td>
-                        <td><?php echo $rows['pnumber'];?></td>
+                        <td><?php echo $rows['user_id'];?></td>
+                        <td><?php echo $rows['user_name'];?></td>
+                        <td><?php echo $rows['user_email'];?></td>
+                        <td><?php echo $rows['user_status'];?></td>
                         <td><a class= "link" href="forgot_pass_user.php">Update Password</a></td>
                         <td><a class= "link" href="">Suspend Account</a></td>
+                        <td><a class= "link" href="">Unsuspend Account</a></td>
                     </tr>
 
                     <?php } ?>

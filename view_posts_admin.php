@@ -280,8 +280,8 @@ $result = mysqli_query($conn,$query);
     <div class = "header">
         <ul type = "none">
             <li><a href="index_admin.php"> HOME </a></li>
-			<li><a href=""> ABOUT US </a></li>
-			<li><a href=""> CONTACT US </a></li>
+			<li><a href="about_us.php"> ABOUT US </a></li>
+			<li><a href="contact_us.php"> CONTACT US </a></li>
         </ul>
     </div>
     
@@ -317,7 +317,7 @@ $result = mysqli_query($conn,$query);
                         <td><?php echo $rows['product_category'];?></td>
                         <td><?php echo $rows['seller_email'];?></td>
                         <td><?php echo $rows['product_description'];?></td>
-                        <td><a class= "link" href="">Update Products</a></td>
+                        <td><a class= "link" href="update_admin.php?GetID=<?php echo $rows['product_id']?>">Update Products</a></td>
                         <td><a class= "link" href="">Disable Products</a></td>
                     </tr>
 

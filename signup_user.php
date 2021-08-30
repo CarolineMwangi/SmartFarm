@@ -1,235 +1,205 @@
 <?php
 
-$host="localhost";
-$user="root";
-$pass="";
-$db="sfdb";
+//index.php
 
-//mysqli_connect($host,$user,$pass);
-//mysqli_select_db($db, 'smartfarmme') or die(mysqli_error($db));
-$con = mysqli_connect('localhost', 'root', '', 'sfdb');
-if (!$con) {
-	die("<script>alert('Connection failed.')</script>");
-}
+//error_reporting(E_ALL);
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-error_reporting(0);
 session_start();
 
-
-if (isset($_SESSION['email_address'])) {
-    header("Location: login_user.php");
+if(isset($_SESSION["user_id"]))
+{
+	header("location:home.php");
 }
 
-if (isset($_POST['submit'])) {
 
-	$fname=($_POST['fname']);
-	$lname=($_POST['lname']);
-	$email=($_POST['email']);
-	$pnumber=($_POST['pnumber']);
-	$password=md5($_POST['password']);
-	$cpassword=md5($_POST['cpassword']);
+$connect = new PDO("mysql:host=localhost; dbname=sfdb", "root", "");
 
-	if ($password == $cpassword){
+$message = '';
+$error_user_name = '';
+$error_user_email = '';
+$error_user_password = '';
+$error_user_cpassword = '';
+$user_name = '';
+$user_email = '';
+$user_password = '';
+$user_cpassword = '';
 
-		$sql = "SELECT * FROM users WHERE email='$email'";
-		$result = mysqli_query($con, $sql);
-		if (!$result->num_rows > 0) {
-			$sql="INSERT INTO users (fname,lname,email,pnumber,password) VALUES ('$fname','$lname','$email','$pnumber','$password')";
-			$result = mysqli_query($con,$sql);
-
-			if($result){
-				echo "<script>alert('Yay! Registration Completed.')</script>";
-				$fname = "";
-                $lname = "";
-				$email = "";
-                $pnumber = "";
-				$password = "";
-				$cpassword = "";
-
-			}else{
-				echo "<script>alert('Oops! Something Wrong Went.')</script>";
-			}
-		}else {
-				echo "<script>alert('Email Already Exists.Try again.')</script>";
-			}
-		
-		} else {
-			echo "<script>alert('Password Not Matched.')</script>";
-		}
-		
+if(isset($_POST["register"]))
+{
+	if(empty($_POST["user_name"]))
+	{
+		$error_user_name = "<label class='text-danger'>Enter Name</label>";
+	}
+	else
+	{
+		$user_name = trim($_POST["user_name"]);
+		$user_name = htmlentities($user_name);
 	}
 
+	if(empty($_POST["user_email"]))
+	{
+		$error_user_email = '<label class="text-danger">Enter Email Address</label>';
+	}
+	else
+	{
+		$user_email = trim($_POST["user_email"]);
+		if(!filter_var($user_email, FILTER_VALIDATE_EMAIL))
+		{
+			$error_user_email = '<label class="text-danger">Enter Valid Email Address</label>';
+		}
+	}
 
+	if(empty($_POST["user_password"]))
+	{
+		$error_user_password = '<label class="text-danger">Enter Password</label>';
+	}
+	else
+	{
+		$user_password = trim($_POST["user_password"]);
+		$user_password = md5($user_password);
+	}
+    if(empty($_POST["user_cpassword"]))
+	{
+		$error_user_cpassword = '<label class="text-danger">Confirm Password</label>';
+	}
+	else
+	{
+		$user_cpassword = trim($_POST["user_cpassword"]);
+		$$user_cpassword = md5($user_cpassword);
+	}
+
+	if($error_user_name == '' && $error_user_email == '' && $error_user_password == '' && $error_user_cpassword == '')
+	{
+		$user_activation_code = md5(rand());
+
+		$user_otp = rand(100000, 999999);
+
+		$data = array(
+			':user_name'		=>	$user_name,
+			':user_email'		=>	$user_email,
+			':user_password'	=>	$user_password,
+            ':user_cpassword'	=>	$user_cpassword,
+			':user_activation_code' => $user_activation_code,
+			':user_email_status'=>	'0',
+			':user_otp'			=>	$user_otp
+		);
+
+		$query = "
+		INSERT INTO users
+		(user_name, user_email, user_password, user_token, user_status, user_otp)
+		SELECT * FROM (SELECT :user_name, :user_email, :user_password, :user_activation_code, :user_email_status, :user_otp) AS tmp
+		WHERE NOT EXISTS (
+		    SELECT user_email FROM users WHERE user_email = :user_email
+		) LIMIT 1
+		";
+
+		$statement = $connect->prepare($query);
+
+		$statement->execute($data);
+
+		if($connect->lastInsertId() == 0)
+		{
+			$message = '<label class="text-danger">Email Already Registered</label>';
+		}	
+		else
+		{
+			
+			
+            require 'PHPMailer-master/src/Exception.php';
+            require 'PHPMailer-master/src/PHPMailer.php';
+            require 'PHPMailer-master/src/SMTP.php';
+			$mail = new PHPMailer;
+			$mail->IsSMTP();
+            $mail -> Mailer = "smtp";
+            $mail->SMTPDebug  = 1; 
+			$mail->Host = 'smtp.gmail.com';
+			$mail->Port = '587';
+			$mail->SMTPAuth = true;
+			$mail->Username = 'farmsmart086@gmail.com';
+			$mail->Password = 'smartfarm600.';
+			$mail->SMTPSecure = 'tls';
+			$mail->From = 'farmsmart086@gmail.com';
+			$mail->FromName = 'SmartFarm';
+			$mail->AddAddress($user_email, $user_name);
+			$mail->WordWrap = 50;
+			$mail->IsHTML(true);
+			$mail->Subject = 'Verification code for Verify Your Email Address';
+
+			$message_body = '
+			<p>For verify your email address, enter this verification code when prompted: <b>'.$user_otp.'</b>.</p>
+			<p>Sincerely,</p>
+			';
+			$mail->Body = $message_body;
+
+			if($mail->Send())
+			{
+				echo '<script>alert("Please Check Your Email for Verification Code")</script>';
+
+				header('location:user_email_verify.php?code='.$user_activation_code);
+			}
+			else
+			{
+				$message = $mail->ErrorInfo;
+			}
+		}
+
+	}
+}
 
 ?>
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Registration form</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width-device-width, initial-scale=1.0">
-	
-</head>
-<body>
-	<style type="text/css">
-
-	*{
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		font-family: sans-serif;
-		}
-
-		body {
-			width: 100%;
-			margin: 0;
-			padding: auto;
-			font-family: 'Times New Roman', serif;
-		}
-		.container {
-			width: 350px;
-			height: 600px;
-			color:black;
-			top:10%;
-			left:37%;
-			position: absolute;
-			box-sizing: border-box;
-			padding: 5px 90px;  
-			font-size:14px;
-			font-weight:bold;
-			border:1px solid;
-			background-color:white;
-
-		}
-		.container .avatar{
-			display: block;
-			margin-left: auto;
-			margin-right: auto;
-			width: 100%;
-		}
-		.container .login-text{
-			text-align:center;
-			font-size: 20px;
-			text-decoration: none;
-			font: monospace;
-
-		}
-		.container .login-last{
-			color: #111;
-			font-weight: 400;
-			font-size: 14px;
-			text-align: center;
-			margin-bottom: 20px;
-			display: black;
-			text-transform: capitalize;
-
-		}
-		.container .login-last a{
-			text-decoration: none;
-			color: #6c5ce7;
-
-
-		}
-
-		.container .login-email .input-group {
-			width: 100%;
-			height: 30px;
-			margin-bottom: 25px;
-		}
-
-		.container .login-email .input-group input {
-			width: 100%;
-			height: 100%;
-			padding: 15px 20px;
-			font-size: 13px;
-			border-radius: 30px;
-			background: transparent; 
-			outline: none;
-			transition: .3s;
-		}
-		
-		.container .login-email .input-group .btn {
-			padding: 10px 40px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			margin-top:4px;
-			margin-left:30px;
-			cursor: pointer;
-			border-radius: 16px;
-			border:none;
-			background-color:#AFEEEE;
-		}
-
-		.container .login-email .input-group .btn:hover {
-			transform: translateY(-5px);
-			background: turquoise;
-		}
-		.error{
-			width: 92%;
-			margin: 0px auto;
-			padding: 10px;
-			border: 1px solid #a94442;
-			color: #a94442;
-			background: #f2dede;
-			border-radius: 5px;
-			text-align: left;
-		}
-
-
-	</style>
-
-
-	<div class="container">
-			<img src="logo.png" class="avatar">
-		<form action="" method="POST" class="login-email">
-			<?php if (count($errors)>0): ?>
-
-			<div class="error">
-				<?php  foreach ($errors as $errors): ?>
-				<p><?php echo $errors; ?></p>
-					
-				<?php endforeach ?>
-			</div>	
-
-			<?php endif ?>
-
-			
-			
-			<p class="login-text" >Sign-up</p>
-			
-
-			
-			<div class="input-group">
-				<input type="text" placeholder="First Name" name="fname" value="<?php echo $fname; ?>">
+	<head>
+		<title>Buyer Signup</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="http://code.jquery.com/jquery.js"></script>
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	</head>
+	<body>
+		<br />
+		<div class="container">
+        <img src="SFLogo.png" class="logo" width = "210" height = "105" style = "display: block; margin-left:auto; margin-right:auto; " >
+			<h1 align="center">SIGN UP AS A BUYER ON SMARTFARM</h1>
+			<br />
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Buyer Registration</h3>
+				</div>
+				<div class="panel-body">
+					<?php echo $message; ?>
+					<form method="post">
+						<div class="form-group">
+							<label>Enter Your Name</label>
+							<input type="text" name="user_name" class="form-control" />
+							<?php echo $error_user_name; ?>
+						</div>
+						<div class="form-group">
+							<label>Enter Your Email</label>
+							<input type="text" name="user_email" class="form-control" />
+							<?php echo $error_user_email; ?>
+						</div>
+						<div class="form-group">
+							<label>Enter Your Password</label>
+							<input type="password" name="user_password" class="form-control" />
+							<?php echo $error_user_password; ?>
+						</div>
+                        <div class="form-group">
+							<label>Confirm Your Password</label>
+							<input type="password" name="user_cpassword" class="form-control" />
+							<?php echo $error_user_cpassword; ?>
+						</div>
+						<div class="form-group">
+							<input type="submit" name="register" class="btn btn-success" value="Click to Register" style = "background-color:#AFEEEE; color:black; font-weight:bold;"/>&nbsp;&nbsp;&nbsp;
+							<a href="login_farmer.php">Login</a>
+						</div>
+					</form>
+				</div>
 			</div>
-			<div class="input-group">
-				<input type="text" placeholder="Last Name" name="lname" value="<?php echo $lname; ?>">
-			</div>
-
-			<div class="input-group">
-				<input type="email" placeholder="Email" name="email" value="<?php echo $email; ?>">
-			</div>
-			<div class="input-group">
-				<input type="tel" placeholder="Phone Number" name="pnumber" value="<?php echo $pnumber; ?>">
-			</div>
-			<div class="input-group">
-				<input type="password" placeholder="Password" name="password" value="<?php echo $password; ?>" >
-			</div>
-			<div class="input-group">
-				<input type="password" placeholder="Confirm Password" name="cpassword" value="<?php echo $cpassword; ?>" >
-			</div>
-
-			<div class="input-group">
-				<button type="submit" class="btn" name="submit">Sign-up</button>
-			</div>
-			<p class="login-last">Already have an existing account?<a href="login_user.php">Login here.</a></p>
-			<a href="index.php">Back To Home</a>
-
-		</form>
-	</div>
-</body>
-
+		</div>
+		<br />
+		<br />
+	</body>
 </html>
-

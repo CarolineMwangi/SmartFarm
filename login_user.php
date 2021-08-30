@@ -1,26 +1,15 @@
-<?php
+<?php 
 
-$host="localhost";
-$user="root";
-$pass="";
-$db="sfdb";
-
-$errors=array();
-
-//mysqli_connect($host,$user,$pass);
-//mysqli_select_db($db, 'smartfarmme') or die(mysqli_error($db));
-$con = mysqli_connect('localhost', 'root', '', 'sfdb');
-if (!$con) {
-	die("<script>alert('Connection failed.')</script>");
-}
-
+include 'config_seller.php';
 
 session_start();
+
 error_reporting(0);
 
 if (isset($_SESSION['email_address'])) {
     header("Location: index_user.php");
 }
+
 
 if (isset($_POST['submit'])) {
 		$email=$_POST['email'];
@@ -48,146 +37,70 @@ if (isset($_POST['submit'])) {
 		}
 	
 
+
+if (isset($_POST['login'])) {
+	$email_address = $_POST['user_email'];
+	$password = md5($_POST['user_password']);
+    
+
+
+	$sql = "SELECT * FROM users WHERE user_email='$email_address' AND user_password='$password' AND user_status= '1'";
+	$result = mysqli_query($conn, $sql);
+	if ($result->num_rows > 0) {
+		$row = mysqli_fetch_assoc($result);
+		$_SESSION['email_address'] = $row['user_email'];
+		header("Location: index_user.php");
+	} else {
+		echo "<script>alert('Oops! Incorrect Email or Password.')</script>";
+	}
+
 }
 
+}
 
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width-device-width, initial-scale=1.0">
-	<title>Login form</title>
-</head>
-<body>
-	<style type="text/css">
-
-	*{
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		font-family: sans-serif;
-
-
-		}
-
-		body {
-			width: 100%;
-			margin: 0;
-			padding: auto;
-			font-family: 'Times New Roman', serif;
-		}
-		.container {
-			width: 350px;
-			height: 470px;
-			color:black;
-			top:20%;
-			left:37%;
-			position: absolute;
-			box-sizing: border-box;
-			padding: 5px 90px;  
-			font-size:14px;
-			font-weight:bold;
-			border:1px solid;
-			background-color:white;
-
-		}
-		.container .avatar{
-			display: block;
-			margin-left: auto;
-			margin-right: auto;
-			width: 100%;
-		}
-		
-
-		.container .login-text{
-			text-align:center;
-			font-size: 20px;
-			text-decoration: none;
-			font: monospace;
-
-		}
-		.container .login-last{
-			color: #111;
-			font-weight: 400;
-			font-size: 14px;
-			margin-bottom: 20px;
-			display: black;
-			text-transform: capitalize;
-
-		}
-	
-
-		.container .login-email .input-group {
-			width: 100%;
-			height: 30px;
-			margin-bottom: 25px;
-		}
-
-		.container .login-email .input-group input {
-			width: 100%;
-			height: 100%;
-			padding: 15px 20px;
-			font-size: 13px;
-			border-radius: 30px;
-			background: transparent; 
-			outline: none;
-			transition: .3s;
-		}
-		
-		.container .login-email .input-group .btn {
-			padding: 10px 50px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			margin-top:4px;
-			margin-left:30px;
-			cursor: pointer;
-			border-radius: 16px;
-			border:none;
-			background-color:#AFEEEE;
-		}
-
-		.container .login-email .input-group .btn:hover {
-			transform: translateY(-5px);
-			background:turquoise;
-		}
-			
-	</style>
-
-
-	<div class="container">
-		<img src="logo.png" class="avatar" width = "210" height = "105">
-		<form action="" method="POST" class="login-email">
-			
-			<p class="login-text" >Login</p>
-			<br>
-			<div class="input-group">
-			
-				<input type="email" placeholder="Email" name="email" value="<?php echo $email; ?>" >
+		<title>Buyer Login</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="http://code.jquery.com/jquery.js"></script>
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	</head>
+	<body>
+		<br />
+		<div class="container">
+        <img src="SFLogo.png" class="logo" width = "210" height = "105" style = "display: block; margin-left:auto; margin-right:auto; " >
+			<h1 align="center">LOG IN AS A BUYER ON SMARTFARM</h1>
+			<br />
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Buyer Login</h3>
+				</div>
+				<div class="panel-body">
+					<?php echo $message; ?>
+					<form method="post">
+						
+						<div class="form-group">
+							<label>Enter Your Email</label>
+							<input type="text" name="user_email" class="form-control" />
+							<?php echo $error_user_email; ?>
+						</div>
+						<div class="form-group">
+							<label>Enter Your Password</label>
+							<input type="password" name="user_password" class="form-control" />
+							<?php echo $error_user_password; ?>
+						</div>
+                        
+						<div class="form-group">
+							<input type="submit" name="login" class="btn btn-success" value="Click to Login" style = "background-color:#AFEEEE; color:black; font-weight:bold;"/>&nbsp;&nbsp;&nbsp;
+							<a href="signup_user.php">Signup</a>
+						</div>
+					</form>
+				</div>
 			</div>
-			<div class="input-group">
-				<input type="password" placeholder="Password" name="password" value="<?php if(isset($_POST['password'])){
-					echo $_POST['password'];
-				} ?>" >
-			</div>
-			<div class="input-group">
-				<button type="submit" name="submit" class="btn">Login</button>
-			</div>
-			<div class="">
-			<a href="forgot_pass_user.php"  >Forgot Password? </a>
-			<br>
-			<a href="index.php">Back To Home</a>
-			<br>
-			<br>
-			<p class="login-last">Don't have an Account?<a href="signup_user.php">Sign-up here.</a></p>
 		</div>
-
-
-		</form>
-	</div>
-
-</body>
-
+		<br />
+		<br />
+	</body>
 </html>

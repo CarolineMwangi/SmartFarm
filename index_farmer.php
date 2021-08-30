@@ -1,9 +1,33 @@
 <?php 
 
+include 'config_seller.php';
 session_start();
 
 if (!isset($_SESSION['username'])) {
     header("Location: login_farmer.php");
+}
+
+if (isset($_POST['send'])){
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
+
+    $sql = "INSERT INTO messages (name, email, phone, subject, message)
+					VALUES ('$name', '$email', '$phone', '$subject', '$message')";
+    $result = mysqli_query($conn, $sql);
+    if ($result) {
+        echo "<script>alert('Thank you for your message. We will get back to you soon.')</script>";
+        $name = "";
+        $email = "";
+        $phone = "";
+        $subject = "";
+        $message = "";
+    } else {
+        echo "<script>alert('Oops! Something Wrong Went.')</script>";
+    }
+
 }
 
 ?>
@@ -41,7 +65,7 @@ if (!isset($_SESSION['username'])) {
             height:80px;
             background-color:#AFEEEE;
             float: center;
-            padding-left:20px;
+            padding-left:10px;
 	        border:1px solid none;
             font-weight:bold;
         }
@@ -319,15 +343,15 @@ if (!isset($_SESSION['username'])) {
     <div class = "header">
         <ul type = "none">
             <li><a href="index_farmer.php"> HOME </a></li>
-			<li><a href=""> ABOUT US </a></li>
-			<li><a href=""> CONTACT US </a></li>
+			<li><a href="about_us.php"> ABOUT US </a></li>
+			<li><a href="contact_us.php"> CONTACT US </a></li>
         </ul>
     </div>
 
     <div class = "div1">
         <h1>WELCOME TO SMARTFARM!</h1>
         <div class="welcome">
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti voluptatem nesciunt recusandae fugit hic impedit id et voluptates unde reprehenderit soluta, aspernatur, dolor sequi minima aperiam vitae, laboriosam placeat culpa.</p>
+        <p> <span style = "font-weight: bold;"><?php echo "Thankyou, " . $_SESSION['username']  ?> </span> for trusting us with your business.  The SmartFarm team is more than happy to welcome you to our family and we hope you wil have an amazing experience with us. All the very best as you advertise your products and interact with our customers.</p>
         </div>
     </div>
 
@@ -339,23 +363,23 @@ if (!isset($_SESSION['username'])) {
             
             <h1 class="heading"> <span>CONTACT</span> US</h1>
 
-            <form action="">
+            <form action="" method="POST">
                 
                 <div class="inputBox">
-                    <input type="text" placeholder="Name">
-                    <input type="email" placeholder="Email">
+                    <input type="text" name = "name" placeholder="Name">
+                    <input type="email" name = "email" placeholder="Email">
                 </div>
 
                     <div class="inputBox">
-                    <input type="number" placeholder="Number">
-                    <input type="text" placeholder="Subject">
+                    <input type="number" name = "phone" placeholder="Number">
+                    <input type="text" name = "subject" placeholder="Subject">
                 </div>
 
-                <textarea placeholder="Message" name="" id="" cols="30" rows="10"></textarea>
+                <textarea placeholder="Message" name="message" id="" cols="30" rows="10"></textarea>
 
                 <br>
 
-                <input type="submit" value="SEND MESSAGE" class="btn">
+                <input type="submit" name = "send" value="SEND MESSAGE" class="btn">
 
 
             </form>

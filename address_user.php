@@ -7,7 +7,7 @@ $checkout= array();
 
 if (!isset($_SESSION['email_address'])) {
     header("Location: login_user.php");
-}
+ }
 
 
 $query = "SELECT * FROM products_table ORDER BY product_name";
@@ -271,20 +271,21 @@ section{
 
             <div id="menu-bar" class="fas fa-bars"></div>
 
-            <nav class="navbar">
-                
-                
-               <h1 class="heading"> <?php echo "WELCOME, " . $_SESSION['email_address'] . ""; ?></h1>
+            
 
-        
+            <nav class="navbar">
+                <!-- Adding a row in the nav bar -->
+                <div class="row justify-content-center">
+                    <h1 class="heading text-center" > <?php echo "WELCOME, " . $_SESSION['email_address'] . ""; ?></h1>
+                </div>
+                <!-- Adding a row in the nav bar for the nav links-->
+            <div class="row justify-content-center">        
                 <a href="index_user.php">Home</a>
                 
                 <?php if (isset($_SESSION['email_address'])): ?> 
 
                     <a href="view_posts_buyer.php">Shop Products</a>
                      <a href="profile_user.php">Profile</a>
-
-                
 
                 <?php endif ?>
                   <?php if (isset($_SESSION['email_address'])): ?> 
@@ -298,16 +299,25 @@ section{
                     <a href="logout_user.php">Logout</a>
                      
                 <?php endif ?>
+            </div>
+            <div class="icons">
+                    <a href="view_posts_buyer.php" class="fas fa-shopping-basket">
+                         <?php
+                    if (isset($_SESSION['shopping_cart'])) {
+                        $count=count($_SESSION['shopping_cart']);
+                        echo "<span id=\"card_count\" class=\"text-info \">$count</span>" ;
+                    }else{
+                          echo "<span id=\"card_count\" class=\"text-warning bg-light\">0</span>" ;
+                    }
+                    ?>
+                    </a>
+                    
+                    <a href="profile_user.php" class="fas fa-user-circle"></a>
+                </div>
 
             </nav>
 
-            <div class="icons">
-                <a href="view_posts_buyer.php" class="fas fa-shopping-basket"></a>
-                
-                <a href="profile_user.php" class="fas fa-user-circle"></a>
-
-
-            </div>
+            
 
         </div>
 

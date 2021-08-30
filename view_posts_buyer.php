@@ -102,6 +102,7 @@ if (isset($_GET['action'])) {
             width: 100%
             float: center;
         }
+
         .header
         {
             width: 1366px;
@@ -271,14 +272,12 @@ if (isset($_GET['action'])) {
             text-decoration:underline;
             color:red;
         }
+
         h1
         {
             text-align:center;
         }
-        .data
-        {
-           margin-left:10px;
-        }
+        
         table,th,td
         {
             border: 1px ridge black;
@@ -289,12 +288,17 @@ if (isset($_GET['action'])) {
         {
             background-color:#AFEEEE;
             font-size: 18px;
-            padding: 20px;
+            padding: 10px;
         }
         td
         {
+
             font-size:20px;
             padding: 20px;
+
+            font-size:16px;
+            padding: 10px;
+
         }
         body{
           font-size: 15px;
@@ -1009,6 +1013,7 @@ section{
                             <td><?php echo $values['product_category']?></td>
                             <td><?php echo $values['sellers_email']?></td>
                             <td><?php echo $values['product_description']?></td>
+                            
                             <td><a href="view_posts_buyer.php?action=delete&product_id=<?php echo $values['product_id']; ?>"><span class="text-danger">Remove</span></a></td>
                    </tr>
                    <?php
@@ -1018,6 +1023,11 @@ section{
                 }
                 ?>
 
+
+                <tr>
+                    <td colspan="3" align="right">Total Amount:  </td>
+                    <td align="right"><?php echo number_format($total,2); ?></td>
+                </tr>
 
 
 

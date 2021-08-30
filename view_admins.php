@@ -8,7 +8,7 @@ if (!isset($_SESSION['username'])) {
     header("Location: login_admin.php");
 }
 
-$sql = "SELECT * FROM admin_table ORDER BY adm_last_name";
+$sql = "SELECT * FROM admins ORDER BY adm_name";
 $result1 = mysqli_query($conn,$sql);
 
 ?>
@@ -281,8 +281,8 @@ $result1 = mysqli_query($conn,$sql);
     <div class = "header">
         <ul type = "none">
             <li><a href="index_admin.php"> HOME </a></li>
-			<li><a href=""> ABOUT US </a></li>
-			<li><a href=""> CONTACT US </a></li>
+			<li><a href="about_us.php"> ABOUT US </a></li>
+			<li><a href="contact_us.php"> CONTACT US </a></li>
         </ul>
     </div>
     
@@ -292,10 +292,10 @@ $result1 = mysqli_query($conn,$sql);
             <table>
             <tr>
                 <th>Admin ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Name</th>
                 <th>Email Address</th>
-                <th>Phone Number</th>
+                <th>Status</th>
+                <th> </th>
                 <th> </th>
                 <th> </th>
             </tr>
@@ -306,12 +306,12 @@ $result1 = mysqli_query($conn,$sql);
 
             <tr>
                 <td><?php echo $row['adm_id'];?></td>
-                <td><?php echo $row['adm_first_name'];?></td>
-                <td><?php echo $row['adm_last_name'];?></td>
-                <td><?php echo $row['adm_email_address'];?></td>
-                <td><?php echo $row['adm_phone_number'];?></td>
+                <td><?php echo $row['adm_name'];?></td>
+                <td><?php echo $row['adm_email'];?></td>
+                <td><?php echo $row['adm_status'];?></td>
                 <td><a class="link" href="forgot_pass_admin.php">Update Password</a></td>
                 <td><a class="link" href="">Suspend Account</a></td>
+                <td><a class="link" href="">Unsuspend Account</a></td>
             </tr>
             <?php } ?>
             </table>
