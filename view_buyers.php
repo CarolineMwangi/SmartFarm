@@ -312,8 +312,8 @@ $result = mysqli_query($conn,$query);
                         <td><?php echo $rows['user_email'];?></td>
                         <td><?php echo $rows['user_status'];?></td>
                         <td><a class= "link" href="forgot_pass_user.php">Update Password</a></td>
-                        <td><a class= "link" href="">Suspend Account</a></td>
-                        <td><a class= "link" href="">Unsuspend Account</a></td>
+                        <td><a class= "link" href="suspend_account_user.php?ID=<?php echo $rows['user_id'] ?>">Suspend Account</a></td>
+                        <td><a class= "link" href="unsuspend_account_user.php?ID=<?php echo $rows['user_id'] ?>">Unsuspend Account</a></td>
                     </tr>
 
                     <?php } ?>

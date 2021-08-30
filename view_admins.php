@@ -310,8 +310,8 @@ $result1 = mysqli_query($conn,$sql);
                 <td><?php echo $row['adm_email'];?></td>
                 <td><?php echo $row['adm_status'];?></td>
                 <td><a class="link" href="forgot_pass_admin.php">Update Password</a></td>
-                <td><a class="link" href="">Suspend Account</a></td>
-                <td><a class="link" href="">Unsuspend Account</a></td>
+                <td><a class="link" href="suspend_account_admin.php?ID=<?php echo $row['adm_id'] ?>">Suspend Account</a></td>
+                <td><a class="link" href="unsuspend_account_admin.php?ID=<?php echo $row['adm_id'] ?>">Unsuspend Account</a></td>
             </tr>
             <?php } ?>
             </table>

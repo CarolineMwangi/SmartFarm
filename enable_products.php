@@ -12,12 +12,12 @@
  $result = mysqli_query($conn,$sql);
  if ($result->num_rows > 0) {
     $row = mysqli_fetch_assoc($result);
-    $sql = "UPDATE products_table SET status = '1'";
+    $sql = "UPDATE products_table SET status = '1' WHERE product_id = '".$ProductID."'";
                 $result = mysqli_query($conn,$sql);
 
                 if($result){
                     echo "<script>alert('Product Enabled.')</script>";
-                    echo '<script>window.location = "view_posts_seller.php"</script>';
+                    
                 }else{
                     echo "<script>alert('Product Not Enabled.')</script>";
                 }
