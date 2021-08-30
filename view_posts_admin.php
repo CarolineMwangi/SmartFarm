@@ -18,7 +18,7 @@ $result = mysqli_query($conn,$query);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View SmartFarm Sellers</title>
+    <title>View SmartFarm Products</title>
     <style>
         body
          {
@@ -298,7 +298,9 @@ $result = mysqli_query($conn,$query);
                 <th>Product Category</th>
                 <th>Seller's Email</th>
                 <th>Product Description</th>
+                <th>Product Status</th>
                 
+                <th> </th>
                 <th> </th>
                 <th> </th>
             </tr>
@@ -317,8 +319,10 @@ $result = mysqli_query($conn,$query);
                         <td><?php echo $rows['product_category'];?></td>
                         <td><?php echo $rows['seller_email'];?></td>
                         <td><?php echo $rows['product_description'];?></td>
+                        <td><?php echo $rows['status'];?></td>
                         <td><a class= "link" href="update_admin.php?GetID=<?php echo $rows['product_id']?>">Update Products</a></td>
-                        <td><a class= "link" href="">Disable Products</a></td>
+                        <td><a class= "link" href="disable_products.php?ID=<?php echo $rows['product_id'] ?>">Disable Products</a></td>
+                        <td><a class= "link" href="enable_products.php?ID=<?php echo $rows['product_id'] ?>">Enable Products</a></td>
                     </tr>
 
                     <?php } ?>

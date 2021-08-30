@@ -8,7 +8,7 @@ if (!isset($_SESSION['username'])) {
     header("Location: login_admin.php");
 }
 
-$query = "SELECT * FROM register ORDER BY name";
+$query = "SELECT * FROM messages ORDER BY name";
 $result = mysqli_query($conn,$query);
 
 ?>
@@ -18,7 +18,7 @@ $result = mysqli_query($conn,$query);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View SmartFarm Sellers</title>
+    <title>View SmartFarm Messages</title>
     <style>
         body
          {
@@ -285,18 +285,19 @@ $result = mysqli_query($conn,$query);
         </ul>
     </div>
     
-    <h1> SMART FARM USERS: SELLERS</h1>
+    <h1> SMART FARM MESSAGES</h1>
     <div class = "data">
     <form action="" method="post">
         <table>
             <tr>
-                <th>Seller ID</th>
-                <th>Name</th>
-                <th>Email Address</th>
-                <th>Status</th>
-                <th> </th>
-                <th> </th>
-                <th> </th>
+                  
+                <th>ID</th>
+                <th>User Name</th> 
+                <th>User Email</th>
+                <th>User Phone</th>
+                <th>Subject</th>
+                <th>Message</th>
+            
             </tr>
 
         <?php
@@ -309,10 +310,10 @@ $result = mysqli_query($conn,$query);
                         <td><?php echo $rows['id'];?></td>
                         <td><?php echo $rows['name'];?></td>
                         <td><?php echo $rows['email'];?></td>
-                        <td><?php echo $rows['status'];?></td>
-                        <td><a class= "link" href="forgot_pass_farmer.php">Update Password</a></td>
-                        <td><a class= "link" href="suspend_account.php?ID=<?php echo $rows['id'] ?>">Suspend Account</a></td>
-                        <td><a class= "link" href="unsuspend_account.php?ID=<?php echo $rows['id'] ?>">Unsuspend Account</a></td>
+                        <td><?php echo $rows['phone'];?></td>
+                        <td><?php echo $rows['subject'];?></td>
+                        <td><?php echo $rows['message'];?></td>
+                        
                     </tr>
 
                     <?php } ?>
