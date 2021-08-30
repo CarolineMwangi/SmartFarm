@@ -27,12 +27,15 @@ if (isset($_POST['submit'])) {
          $address=($_POST['address']);
         $buyer_email=($_POST['buyer_email']);
         $products=serialize($_SESSION['shopping_cart']);
+        $mpesa_code=($_POST['mpesa_code']);
+        $pnumber=($_POST['pnumber']);
+
 
        
 
     
 
-           $sql="INSERT INTO orders (order_id, buyer_email, products, address) VALUES ('$id','$buyer_email', '$products','$address') ";
+           $sql="INSERT INTO orders (order_id, buyer_email, products, address, mpesa_code, pnumber) VALUES ('$id','$buyer_email', '$products','$address', '$mpesa_code', '$pnumber') ";
             $result = mysqli_query($conn,$sql);
 
             if ($result) {
@@ -378,12 +381,12 @@ section{
                         <div id="mpesa1" >
                           
                           
-                        <form method="post">
+                        
 
-                            <input type="text" name="mpesa_code" value="" placeholder="M-Pesa transaction code" hidden>
-                            <input type="number" name="pnumber" value="" placeholder="Phone Number used to make payment" hidden>
-                            <input type="number" name="total_amount" value="" hidden>
-                        </form>
+                            <input type="text" name="mpesa_code" value="" placeholder="M-Pesa transaction code" >
+                            <input type="number" name="pnumber" value="" placeholder="Phone Number used to make payment" >
+                            
+                        
                         </div>
                           <script type="text/javascript">
                                 

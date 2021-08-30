@@ -11,30 +11,7 @@ if (isset($_SESSION['email_address'])) {
 }
 
 
-if (isset($_POST['submit'])) {
-		$email=$_POST['email'];
-		$password=md5($_POST['password']);
 
-		
-		$query=" SELECT * FROM users WHERE email='$email' AND password='$password'";
-		$result= mysqli_query($con, $query);
-		
-		if ($result->num_rows > 0) {
-			
-			$row = mysqli_fetch_assoc($result);
-			$_SESSION['email_address'] = $row['email'];
-			$_SESSION['fname'] = $row['fname'];
-			$_SESSION['lname'] = $row['lname'];
-			$_SESSION['pnumber'] = $row['pnumber'];
-
-			header("Location: index_user.php");
-	
-			
-		}else{
-
-			echo "<script>alert('Oops! Incorrect Email or Password.')</script>";
-
-		}
 	
 
 
@@ -49,6 +26,8 @@ if (isset($_POST['login'])) {
 	if ($result->num_rows > 0) {
 		$row = mysqli_fetch_assoc($result);
 		$_SESSION['email_address'] = $row['user_email'];
+		
+		
 		header("Location: index_user.php");
 	} else {
 		echo "<script>alert('Oops! Incorrect Email or Password.')</script>";
@@ -56,7 +35,7 @@ if (isset($_POST['login'])) {
 
 }
 
-}
+
 
 ?>
 <!DOCTYPE html>

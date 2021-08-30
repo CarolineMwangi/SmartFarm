@@ -208,31 +208,23 @@ session_start();
 
 
 						<dl>
-							<dt>First Name</dt>
+							<dt> Name</dt>
 						<li>
-							<?php
-							echo $_SESSION['fname'];
+							<?php if (isset($_SESSION['user_name'])) {
+								echo $_SESSION['user_name'];
+							}
+							
 						?>
 						</li>
 						</dl>
-						<dl>
-							<dt>Last Name</dt>
-						<li><?php
-							echo $_SESSION['lname'];
-						?></li>
-						</dl>
+						
 						<dl>
 							<dt>Email Address</dt>
 						<li><?php 
-							echo $_SESSION['email'];
+							echo $_SESSION['email_address'];
 						?></li>
 						</dl>
-						<dl>
-							<dt>Phone Number</dt>
-						<li><?php 
-							echo $_SESSION['pnumber'];
-						?></li>
-						</dl>
+						
 					
 						
 						
