@@ -13,6 +13,7 @@ if(isset($_POST['post'])){
     $product_category = $_POST['product_category'];
     $email_address = $_POST['email_address'];
     $product_description = $_POST['product_description'];
+    $product_status = '1';
     $product_imagepath = $_FILES['product_imagepath'];
 
     $ofile_name = $_FILES['product_imagepath']['name'];
@@ -24,7 +25,7 @@ if(isset($_POST['post'])){
 
     if(is_uploaded_file($_FILES['product_imagepath']['tmp_name'])){
         if(move_uploaded_file($tmp_location, $file_path.$nfile_name)){
-            $sql = "INSERT INTO products_table (product_name, product_price, seller_email, product_category, product_description, product_image) VALUES ('$product_name', '$product_price', '$email_address', '$product_category', '$product_description', '$nfile_name' ) ";
+            $sql = "INSERT INTO products_table (product_name, product_price, seller_email, product_category, product_description, product_image, status) VALUES ('$product_name', '$product_price', '$email_address', '$product_category', '$product_description', '$nfile_name' , '$product_status' ) ";
             $result = mysqli_query($conn, $sql);
             if ($result) {
  			
