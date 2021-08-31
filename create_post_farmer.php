@@ -310,14 +310,7 @@ if(isset($_POST['post'])){
                     <a href="view_posts_seller.php">View Your Posts</a>
                 </div>
             </div>
-            <div class="dropdown_orders">
-			    <a href=""><button class="dropbtn2">ORDERS</button></a>
-                <div class="dropdown-orders">
-                     <a href="">All Orders</a>
-                     <a href="">Dispatched Orders</a>
-                     <a href="">Pending Orders</a>
-                 </div>
-            </div>
+            
     </div>
     <div class = "header">
         <ul type = "none">

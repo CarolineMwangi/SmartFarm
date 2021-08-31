@@ -327,6 +327,7 @@ if (!isset($_SESSION['username'])) {
         <div class="dropdown_posts">
 			    <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
+                    <a href="view_orders.php">View Orders</a>
                     <a href="view_posts_admin.php">View Posts</a>
                     <a href="view_messages_admin.php">View Messages</a>
                 </div>

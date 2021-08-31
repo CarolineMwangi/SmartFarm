@@ -18,6 +18,7 @@ $result = mysqli_query($conn,$query);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css">
     <title>View SmartFarm Sellers</title>
     <style>
         body
@@ -262,7 +263,9 @@ $result = mysqli_query($conn,$query);
         <div class="dropdown_posts">
 			    <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
+                    <a href="view_orders.php">View Orders</a>
                     <a href="view_posts_admin.php">View Posts</a>
+                    <a href="view_messages_admin.php">View Messages</a>
                 </div>
             </div>
             <div class="dropdown_orders">
@@ -288,7 +291,7 @@ $result = mysqli_query($conn,$query);
     <h1> SMART FARM USERS: SELLERS</h1>
     <div class = "data">
     <form action="" method="post">
-        <table>
+        <table id="tbl_products">
             <tr>
                 <th>Seller ID</th>
                 <th>Name</th>
@@ -320,5 +323,16 @@ $result = mysqli_query($conn,$query);
         </table>
     </form>
     </div>
+    <script type="text/javascript">
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+    $(document).ready(function() {
+      $('#tbl_products').DataTable();
+    } );
+    </script>
 </body>
 </html>

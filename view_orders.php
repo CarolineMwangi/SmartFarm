@@ -8,9 +8,9 @@ if (!isset($_SESSION['username'])) {
     header("Location: login_admin.php");
 }
 
-$name = $_SESSION['username'];
 
-$query = "SELECT * FROM products_table where seller_email = '$name'  ORDER BY product_name";
+
+$query = "SELECT * FROM orders  ORDER BY date";
 $result = mysqli_query($conn,$query);
 
 ?>
@@ -20,8 +20,7 @@ $result = mysqli_query($conn,$query);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View SmartFarm Products</title>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css">
+    <title>View SmartFarm Orders</title>
     <style>
         body
          {
@@ -212,7 +211,7 @@ $result = mysqli_query($conn,$query);
         }
         .data
         {
-           margin-left:10px;
+           margin-left:50px;
         }
         table,th,td
         {
@@ -258,45 +257,53 @@ $result = mysqli_query($conn,$query);
 			    <button class="dropbtn3"><?php echo "WELCOME, " . $_SESSION['username'] . ""; ?></button>
                 <div class="dropdown-profile">
                     <a href="">Manage Profile</a>
-                    <a href="changepassword_farmer.php">Change Password</a>
-                    <a href="logout_farmer.php">Logout</a>
+                    <a href="changepassword_admin.php">Change Password</a>
+                    <a href="logout_admin.php">Logout</a>
                 </div>
             </div>
-            <div class="dropdown_posts">
+        <div class="dropdown_posts">
 			    <button class="dropbtn1">POSTS</button>
                 <div class="dropdown-posts">
-                    <a href="create_post_farmer.php">Create Post</a>
-                    <a href="view_posts_seller.php">View Your Posts</a>
+                    <a href="view_orders.php">View Orders</a>
+                    <a href="view_posts_admin.php">View Posts</a>
+                    <a href="view_messages_admin.php">View Messages</a>
                 </div>
             </div>
-            
+            <div class="dropdown_orders">
+			    <a href=""><button class="dropbtn2">USERS</button></a>
+                <div class="dropdown-orders">
+                     <a href="view_farmers.php">View Sellers</a>
+                     <a href="view_buyers.php">View Buyers</a>
+                     <a href="view_admins.php">View Admins</a>
+                     <a href="signup_admin.php">Add Admins</a>
+                     <a href="add_seller.php">Add Sellers</a>
+                     <a href="add_buyer.php">Add Buyers</a>
+                 </div>
+            </div>
     </div>
     <div class = "header">
         <ul type = "none">
-            <li><a href="index_farmer.php"> HOME </a></li>
-			<li><a href=""> ABOUT US </a></li>
-			<li><a href=""> CONTACT US </a></li>
+            <li><a href="index_admin.php"> HOME </a></li>
+			<li><a href="about_us.php"> ABOUT US </a></li>
+			<li><a href="contact_us.php"> CONTACT US </a></li>
         </ul>
     </div>
     
-    <h1> SMART FARM PRODUCTS</h1>
-    
-
+    <h1> SMART FARM ORDERS</h1>
     <div class = "data">
     <form action="" method="post">
-        <table id="tbl_products">
+        <table>
             <tr>
                   
-                <th>Product ID</th>
-                <th>Product Image</th> 
-                <th>Product Name</th>
-                <th>Product Price</th>
-                <th>Product Category</th>
-                <th>Seller's Email</th>
-                <th>Product Description</th>
-                <th>Product Status</th>
+            <th>Order ID</th>
+                <th>Buyer Email</th> 
+                <th>Products</th>
+                <th>Date</th>
+                <th>Address</th>
+                <th>Status</th>
+                <th>Mpesa Transaction Code</th>
+                <th>Pnumber</th>
                 
-                <th> </th>
                 <th> </th>
                 <th> </th>
             </tr>
@@ -308,17 +315,16 @@ $result = mysqli_query($conn,$query);
         ?>
 
                     <tr>
-                        <td><?php echo $rows['product_id'];?></td>
-                        <td><?php echo '<div style="margin:5px;padding-right:10px"><img src="assets/'.$rows["product_image"].'" width="120px" height="100px"><br>';?></td>
-                        <td><?php echo $rows['product_name'];?></td>
-                        <td><?php echo $rows['product_price'];?></td>
-                        <td><?php echo $rows['product_category'];?></td>
-                        <td><?php echo $rows['seller_email'];?></td>
-                        <td><?php echo $rows['product_description'];?></td>
+                    <td><?php echo $rows['order_id'];?></td>
+                        <td><?php echo $rows['buyer_email'];?></td>
+                        <td><?php echo var_dump(unserialize($rows['products'])); ?></td>
+                        <td><?php echo $rows['date'];?></td>
+                        <td><?php echo $rows['address'];?></td>
                         <td><?php echo $rows['status'];?></td>
-                        <td><a class= "link" href="update.php?GetID=<?php echo $rows['product_id']?>">Update Products</a></td>
-                        <td><a class= "link" href="disable_products.php?ID=<?php echo $rows['product_id'] ?>">Disable Products</a></td>
-                        <td><a class= "link" href="enable_products.php?ID=<?php echo $rows['product_id'] ?>">Enable Products</a></td>
+                        <td><?php echo $rows['mpesa_code'];?></td>
+                        <td><?php echo $rows['pnumber'];?></td>
+                        <td><a class= "link" href="approve_orders.php?ID=<?php echo $rows['order_id']?>">Approve</a></td>
+                        <td><a class= "link" href="complete_orders.php?ID=<?php echo $rows['order_id']?>">Complete</a></td>
                     </tr>
 
                     <?php } ?>
@@ -326,16 +332,5 @@ $result = mysqli_query($conn,$query);
         </table>
     </form>
     </div>
-    <script type="text/javascript">
-
-    </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
-    <script src="js/main.js"></script>
-    <script>
-    $(document).ready(function() {
-      $('#tbl_products').DataTable();
-    } );
-    </script>
 </body>
 </html>

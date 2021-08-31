@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
     background: #2B65EC;
     color: #fff;
     padding: .8rem 3rem;
-    font-size: 0.9rem;
+    font-size: 30px;
     text-align: center;
     cursor: pointer;
 }
@@ -382,7 +382,7 @@ section{
                           
                           
                         
-
+                            <p>MAKE PAYMENT ON MPESA SEND MONEY NUMBER XXXXXXXXXX then fill the form below:</p>
                             <input type="text" name="mpesa_code" value="" placeholder="M-Pesa transaction code" >
                             <input type="number" name="pnumber" value="" placeholder="Phone Number used to make payment" >
                             

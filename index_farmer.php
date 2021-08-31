@@ -65,7 +65,7 @@ if (isset($_POST['send'])){
             height:80px;
             background-color:#AFEEEE;
             float: center;
-            padding-left:10px;
+            padding-left:20px;
 	        border:1px solid none;
             font-weight:bold;
         }
@@ -331,14 +331,7 @@ if (isset($_POST['send'])){
                     <a href="view_posts_seller.php">View Your Posts</a>
                 </div>
             </div>
-            <div class="dropdown_orders">
-			    <a href=""><button class="dropbtn2">ORDERS</button></a>
-                <div class="dropdown-orders">
-                     <a href="">All Orders</a>
-                     <a href="">Dispatched Orders</a>
-                     <a href="">Pending Orders</a>
-                 </div>
-            </div>
+            
     </div>
     <div class = "header">
         <ul type = "none">

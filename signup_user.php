@@ -126,10 +126,10 @@ if(isset($_POST["register"]))
 			$mail->AddAddress($user_email, $user_name);
 			$mail->WordWrap = 50;
 			$mail->IsHTML(true);
-			$mail->Subject = 'Verification code for Verify Your Email Address';
+			$mail->Subject = 'SmartFarm Verification code for Email Verification';
 
 			$message_body = '
-			<p>For verify your email address, enter this verification code when prompted: <b>'.$user_otp.'</b>.</p>
+			<p>To verify your email address, enter this verification code when prompted: <b>'.$user_otp.'</b>.</p>
 			<p>Sincerely,</p>
 			';
 			$mail->Body = $message_body;

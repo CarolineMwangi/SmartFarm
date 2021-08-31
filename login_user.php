@@ -12,9 +12,6 @@ if (isset($_SESSION['email_address'])) {
 
 
 
-	
-
-
 if (isset($_POST['login'])) {
 	$email_address = $_POST['user_email'];
 	$password = md5($_POST['user_password']);
