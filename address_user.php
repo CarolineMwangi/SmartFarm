@@ -2,6 +2,9 @@
 
 include 'config_seller.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 session_start();
 $checkout= array();
 
@@ -39,12 +42,43 @@ if (isset($_POST['submit'])) {
             $result = mysqli_query($conn,$sql);
 
             if ($result) {
-                echo "<script>alert('Order Complete.')</script>";
-                unset($_SESSION['shopping_cart']);
-                echo "<script>window.location.href='final_checkout.php?id=".$id."';</script>";
-            }else{
-                echo "<script>alert('Oops! Something went wrong.')</script>";
-            }
+
+                require 'PHPMailer-master/src/Exception.php';
+                require 'PHPMailer-master/src/PHPMailer.php';
+                require 'PHPMailer-master/src/SMTP.php';
+                $mail = new PHPMailer;
+                $mail->IsSMTP();
+                $mail -> Mailer = "smtp";
+                $mail->SMTPDebug  = 1; 
+                $mail->Host = 'smtp.gmail.com';
+                $mail->Port = '587';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'farmsmart086@gmail.com';
+                $mail->Password = 'smartfarm600.';
+                $mail->SMTPSecure = 'tls';
+                $mail->From = 'farmsmart086@gmail.com';
+                $mail->FromName = 'SmartFarm';
+                $mail->AddAddress($buyer_email);
+                $mail->WordWrap = 50;
+                $mail->IsHTML(true);
+                $mail->Subject = 'SmartFarm Order';
+                $message_body = '
+                <p>Your SmartFarm Order #<b>'.$id.'</b> has been placed.Thank you for shopping with us.</p>
+                <p>Sincerely,</p>
+                ';
+                $mail->Body = $message_body;
+
+                if($mail->Send())
+                {
+                    echo "<script>alert('Order Complete.')</script>";
+                    unset($_SESSION['shopping_cart']);
+                    echo "<script>window.location.href='final_checkout.php?id=".$id."';</script>";
+                }
+                else
+                {
+                    $message = $mail->ErrorInfo;
+                }
+}
         }else{
             echo "<script>alert('You have no products in cart.')</script>";
         }
