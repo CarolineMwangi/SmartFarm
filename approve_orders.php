@@ -1,6 +1,8 @@
 <?php
  
  include 'config_seller.php';
+ use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
  session_start();
  
  if (!isset($_SESSION['username'])) {
@@ -8,19 +10,51 @@
  }
  
  $OrderID = $_GET['ID'];
- $sql = "SELECT status FROM orders WHERE order_id = '".$OrderID."'";
+ $sql = "SELECT buyer_email, status FROM orders WHERE order_id = '".$OrderID."'";
  $result = mysqli_query($conn,$sql);
  if ($result->num_rows > 0) {
     $row = mysqli_fetch_assoc($result);
+    $email = $row['buyer_email'];
     $sql = "UPDATE orders SET status = 'approved' WHERE order_id = '".$OrderID."'";
                 $result = mysqli_query($conn,$sql);
 
                 if($result){
+                require 'PHPMailer-master/src/Exception.php';
+                require 'PHPMailer-master/src/PHPMailer.php';
+                require 'PHPMailer-master/src/SMTP.php';
+                $mail = new PHPMailer;
+                $mail->IsSMTP();
+                $mail -> Mailer = "smtp";
+                $mail->SMTPDebug  = 1; 
+                $mail->Host = 'smtp.gmail.com';
+                $mail->Port = '587';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'farmsmart086@gmail.com';
+                $mail->Password = 'smartfarm600.';
+                $mail->SMTPSecure = 'tls';
+                $mail->From = 'farmsmart086@gmail.com';
+                $mail->FromName = 'SmartFarm';
+                $mail->AddAddress($email);
+                $mail->WordWrap = 50;
+                $mail->IsHTML(true);
+                $mail->Subject = 'SmartFarm Order';
+                $message_body = '
+                <p>Your SmartFarm Order #<b>'.$OrderID.'</b> has been approved.Thank you for shopping with us.</p>
+                <p>Sincerely,</p>
+                ';
+                $mail->Body = $message_body;
+
+                if($mail->Send())
+                {
                     echo "<script>alert('Order Approved.')</script>";
                     echo '<script>window.location = "view_orders.php"</script>';
+                }
+                else
+                {
+                    $message = $mail->ErrorInfo;
+                }
+                   
                     
-                }else{
-                    echo "<script>alert('Order Not Approved .')</script>";
                 }
 } else {
     echo "<script>alert('Oops! Something went wrong.')</script>";
