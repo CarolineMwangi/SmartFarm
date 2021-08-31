@@ -343,7 +343,7 @@ section{
                 foreach ($_SESSION['shopping_cart'] as $keys => $values) {
                     
                    ?>
-                   <tr>
+                   <tr >
                         <td><?php echo '<div style="margin:5px;padding-right:10px"><img src="assets/'.$values["product_image"].'" width="120px" height="100px"><br>';?></td>
                             <td>Product:   </td>
                             <td><?php echo $values['product_name']?></td>
